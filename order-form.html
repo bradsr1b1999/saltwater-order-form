@@ -11,7 +11,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5;min-height:100vh}
 .hdr{background:var(--sur);border-bottom:1px solid var(--bdr);padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-#brand-logo{height:36px;width:auto;display:none}
+#brand-logo{height:40px;width:auto;display:none;object-fit:contain}
 .hdr-name{font-size:16px;font-weight:600;color:var(--pri)}
 .hdr-tag{font-size:12px;color:var(--mut);margin-top:1px}
 .wrap{max-width:660px;margin:0 auto;padding:20px 16px 100px}
@@ -30,11 +30,12 @@ textarea{resize:vertical;min-height:72px}
 .sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);padding:0 2px;margin-bottom:8px}
 .prod-card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .prod-card.active{border-color:var(--pri);border-width:2px;box-shadow:0 2px 12px color-mix(in srgb,var(--pri) 12%,transparent)}
-.prod-imgs{display:flex;width:100%;background:var(--bg);border-bottom:1px solid var(--bdr);overflow:hidden;max-height:240px}
-.prod-img-full{flex:1;object-fit:cover;cursor:zoom-in;transition:opacity .15s;display:block;min-height:180px}
-.prod-img-full:hover{opacity:.9}
-.prod-img-full:not(:last-child){border-right:1px solid var(--bdr)}
-.prod-img-ph{width:100%;height:140px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:40px;border-bottom:1px solid var(--bdr)}
+.prod-imgs{display:flex;width:100%;background:#000;border-bottom:1px solid var(--bdr);overflow:hidden;height:320px}
+.prod-imgs.single{height:360px}
+.prod-img-full{flex:1;width:50%;height:100%;object-fit:cover;object-position:center top;display:block;cursor:zoom-in;transition:opacity .15s}
+.prod-img-full:hover{opacity:.88}
+.prod-img-full:not(:last-child){border-right:1px solid rgba(255,255,255,.15)}
+.prod-img-ph{width:100%;height:200px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:40px;border-bottom:1px solid var(--bdr)}
 .prod-hdr{padding:14px 16px}
 .prod-name{font-size:15px;font-weight:600}
 .prod-code{font-size:11px;color:var(--mut);font-family:monospace;margin-top:1px}
@@ -81,8 +82,9 @@ textarea{resize:vertical;min-height:72px}
 .ok-icon{width:52px;height:52px;background:#f0faf4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;color:#1d7a4a}
 .state-title{font-size:20px;font-weight:700;margin-bottom:7px}
 .state-sub{font-size:14px;color:var(--mut);max-width:380px;line-height:1.6}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
-.lightbox img{max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
+.lightbox img{max-width:100%;max-height:92vh;border-radius:8px;object-fit:contain}
+.img-caption{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font-size:12px}
 </style>
 </head>
 <body>
@@ -163,45 +165,42 @@ textarea{resize:vertical;min-height:72px}
     </div>
 
     <button class="submit-btn" id="submit-btn" onclick="doSubmit()">Submit order</button>
-
   </div>
 </div>
 
 <script>
-// ── PROXY — your Netlify function URL ─────────────────────────────────────────
-const PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtable';
+var PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtable';
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
 var gCompany   = null;
 var gLocations = [];
 var gProducts  = [];
 var gItems     = {};
 
-// ── API ───────────────────────────────────────────────────────────────────────
 function apiCall(path, method, body) {
   return fetch(PROXY, {
-    method:  'POST',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ path: path, method: method || 'GET', body: body })
+    body: JSON.stringify({ path: path, method: method || 'GET', body: body || null })
   }).then(function(r) { return r.json(); });
 }
 
 function apiGet(table, formula) {
-  var path = '/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&maxRecords=1';
-  return apiCall(path).then(function(d) { return (d.records && d.records[0]) ? d.records[0] : null; });
+  return apiCall('/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&maxRecords=1')
+    .then(function(d) { return (d.records && d.records[0]) ? d.records[0] : null; });
 }
 
 function apiGetByIds(table, ids) {
+  if (!ids || !ids.length) return Promise.resolve([]);
   var formula = 'OR(' + ids.map(function(id) { return 'RECORD_ID()="' + id + '"'; }).join(',') + ')';
-  var path    = '/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&sort[0][field]=ProductCode&sort[0][direction]=asc';
-  return apiCall(path).then(function(d) { return d.records || []; });
+  var sort = table === 'Products' ? '&sort[0][field]=ProductCode&sort[0][direction]=asc' : '';
+  return apiCall('/' + table + '?filterByFormula=' + encodeURIComponent(formula) + sort)
+    .then(function(d) { return d.records || []; });
 }
 
 function apiPost(table, fields) {
   return apiCall('/' + table, 'POST', { fields: fields });
 }
 
-// ── BOOT ──────────────────────────────────────────────────────────────────────
 function init() {
   var slug = new URLSearchParams(location.search).get('slug');
   if (!slug) { showErr('Invalid link', 'No order form identifier found. Please check your link.'); return; }
@@ -216,12 +215,18 @@ function init() {
     var productIds  = company.fields['Products']    || [];
     var locationIds = company.fields['Locations 2'] || [];
 
-    Promise.all([
-      locationIds.length ? apiGetByIds('Locations', locationIds) : Promise.resolve([]),
-      productIds.length  ? apiGetByIds('Products',  productIds)  : Promise.resolve([])
+    console.log('Product IDs:', productIds);
+    console.log('Location IDs:', locationIds);
+
+    return Promise.all([
+      apiGetByIds('Locations', locationIds),
+      apiGetByIds('Products',  productIds)
     ]).then(function(results) {
       gLocations = results[0];
       gProducts  = results[1];
+
+      console.log('Locations loaded:', gLocations.length);
+      console.log('Products loaded:', gProducts.length);
 
       if (!gProducts.length) { showErr('No products', 'No products are available for your account right now.'); return; }
 
@@ -230,12 +235,11 @@ function init() {
       show('st-form');
     });
   }).catch(function(e) {
-    console.error(e);
+    console.error('Init error:', e);
     showErr('Connection error', 'Unable to load the form. Please try again or contact us directly.');
   });
 }
 
-// ── BRAND ─────────────────────────────────────────────────────────────────────
 function applyBrand(f) {
   if (f.BrandPrimaryColor)   document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
   if (f.BrandSecondaryColor) document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
@@ -243,13 +247,13 @@ function applyBrand(f) {
     var el = document.getElementById('brand-logo');
     el.src = f.BrandLogoUrl;
     el.style.display = 'block';
+    el.onerror = function() { el.style.display = 'none'; };
   }
   document.getElementById('co-name').textContent = f.CompanyName || '';
   document.getElementById('co-tag').textContent  = f.OrderFormWelcomeMsg || 'Place your order below';
   document.title = 'Order — ' + (f.CompanyName || '');
 }
 
-// ── LOCATIONS ─────────────────────────────────────────────────────────────────
 function fillLocations() {
   var sel = document.getElementById('f-location');
   if (!gLocations.length) {
@@ -260,29 +264,26 @@ function fillLocations() {
     return;
   }
   gLocations.forEach(function(loc) {
-    var o    = document.createElement('option');
-    o.value  = loc.id;
-    var f    = loc.fields;
+    var o   = document.createElement('option');
+    o.value = loc.id;
+    var f   = loc.fields;
+    var name = f.LocationName || f.Name || loc.id;
     var city = f.City  ? ', ' + f.City  : '';
     var st   = f.State ? ', ' + f.State : '';
-    o.textContent = (f.LocationName || f.Name || '') + city + st;
+    o.textContent = name + city + st;
     if (f.IsDefaultShipping) o.selected = true;
     sel.appendChild(o);
   });
 }
 
-// ── RENDER PRODUCTS ───────────────────────────────────────────────────────────
 function renderProducts() {
   var wrap = document.getElementById('products-wrap');
   gProducts.forEach(function(p) {
     gItems[p.id] = {
-      singleQty:   0,
-      sizes:       {},
+      singleQty: 0, sizes: {},
       unitPrice:   p.fields.UnitPrice || 0,
       setupFee:    p.fields.SetupFee  || 0,
-      tierApplied: '',
-      tierMinQty:  0,
-      specialNote: ''
+      tierApplied: '', tierMinQty: 0, specialNote: ''
     };
     wrap.appendChild(makeProductCard(p));
   });
@@ -298,11 +299,19 @@ function makeProductCard(p) {
     return i.url && i.type && i.type.indexOf('image') === 0;
   });
 
-  var imgHtml = imgs.length
-    ? '<div class="prod-imgs">' + imgs.map(function(i) {
-        return '<img class="prod-img-full" src="' + i.url + '" loading="lazy" onclick="openImg(\'' + i.url + '\')">';
-      }).join('') + '</div>'
-    : '<div class="prod-img-ph">&#9635;</div>';
+  var imgHtml = '';
+  if (imgs.length >= 2) {
+    imgHtml = '<div class="prod-imgs">'
+      + '<img class="prod-img-full" src="' + imgs[0].url + '" loading="lazy" title="Click to enlarge" onclick="openImg(\'' + imgs[0].url + '\',\'Front\')">'
+      + '<img class="prod-img-full" src="' + imgs[1].url + '" loading="lazy" title="Click to enlarge" onclick="openImg(\'' + imgs[1].url + '\',\'Back\')">'
+      + '</div>';
+  } else if (imgs.length === 1) {
+    imgHtml = '<div class="prod-imgs single">'
+      + '<img class="prod-img-full" src="' + imgs[0].url + '" loading="lazy" title="Click to enlarge" onclick="openImg(\'' + imgs[0].url + '\',\'\')">'
+      + '</div>';
+  } else {
+    imgHtml = '<div class="prod-img-ph">&#9635;</div>';
+  }
 
   var setupHtml = (f.SetupFee && f.SetupFee > 0)
     ? '<div class="setup-note">+ $' + f.SetupFee.toFixed(2) + ' setup' + (f.SetupFeeNote ? ' — ' + f.SetupFeeNote : '') + '</div>'
@@ -315,8 +324,8 @@ function makeProductCard(p) {
   div.innerHTML = imgHtml
     + '<div class="prod-hdr"><div>'
     + '<div class="prod-name">' + (f.ProductName || '') + '</div>'
-    + '<div class="prod-code">' + (f.ProductCode || '') + '</div>'
-    + '<div class="prod-cat">'  + (f.Category    || '') + '</div>'
+    + '<div class="prod-code">' + (f.ProductCode  || '') + '</div>'
+    + '<div class="prod-cat">'  + (f.Category     || '') + '</div>'
     + setupHtml
     + (f.Notes ? '<div class="prod-desc">' + f.Notes + '</div>' : '')
     + '</div></div>'
@@ -330,8 +339,7 @@ function makeProductCard(p) {
     + '</div></div>'
     + '<div class="special-sec"><div class="field">'
     + '<label>Special instructions</label>'
-    + '<input type="text" id="ic-' + p.id + '" placeholder="Any special notes for this item..." '
-    + 'oninput="gItems[\'' + p.id + '\'].specialNote=this.value">'
+    + '<input type="text" id="ic-' + p.id + '" placeholder="Any special notes for this item..." oninput="gItems[\'' + p.id + '\'].specialNote=this.value">'
     + '</div></div></div>';
 
   return div;
@@ -342,12 +350,10 @@ function makeSizeMatrix(p) {
   var cells = sizes.map(function(s) {
     return '<div class="sz-cell">'
       + '<div class="sz-lbl">' + s + '</div>'
-      + '<input type="number" class="sz-inp" min="0" value="0" '
-      + 'data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')">'
+      + '<input type="number" class="sz-inp" min="0" value="0" data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')">'
       + '</div>';
   }).join('');
-  return '<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Qty per size &mdash; $'
-    + (p.fields.UnitPrice || 0).toFixed(2) + ' each</div>'
+  return '<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Qty per size &mdash; $' + (p.fields.UnitPrice||0).toFixed(2) + ' each</div>'
     + '<div class="size-grid">' + cells + '</div>'
     + '<div style="font-size:13px;color:var(--mut);margin-top:3px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
 }
@@ -362,12 +368,11 @@ function makeTierInput(p) {
   ].filter(function(t) { return t.min && t.price; });
 
   var cards = tiers.map(function(t) {
-    var lbl = t.next ? (t.min + '&ndash;' + (t.next - 1) + ' pcs') : (t.min + '+ pcs');
+    var lbl = t.next ? (t.min + '&ndash;' + (t.next-1) + ' pcs') : (t.min + '+ pcs');
     return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
       + '<div class="t-qty">' + lbl + '</div>'
       + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
-      + '<div class="t-each">each</div>'
-      + '</div>';
+      + '<div class="t-each">each</div></div>';
   }).join('');
 
   return '<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Select quantity &mdash; price tier applies automatically</div>'
@@ -380,36 +385,32 @@ function makeTierInput(p) {
 }
 
 function makeSingleQty(p) {
-  return '<div class="field"><label>Quantity &mdash; $' + (p.fields.UnitPrice || 0).toFixed(2) + ' each</label>'
+  return '<div class="field"><label>Quantity &mdash; $' + (p.fields.UnitPrice||0).toFixed(2) + ' each</label>'
     + '<div class="qty-row">'
     + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')">'
     + '</div></div>';
 }
 
-// ── INTERACTION ───────────────────────────────────────────────────────────────
 function onSize(pid) {
   var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
   var total = 0;
   var smap  = {};
   sizes.forEach(function(s) {
     var el = document.querySelector('[data-pid="' + pid + '"][data-sz="' + s + '"]');
-    var v  = parseInt(el ? el.value : 0) || 0;
+    var v  = el ? (parseInt(el.value) || 0) : 0;
     smap[s] = v;
     total  += v;
   });
   gItems[pid].sizes     = smap;
   gItems[pid].singleQty = total;
-  var p = null;
-  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
-  gItems[pid].unitPrice = p ? (p.fields.UnitPrice || 0) : 0;
+  gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
   var el = document.getElementById('st-' + pid);
   if (el) el.textContent = total;
   recalc(pid);
 }
 
 function onTier(pid) {
-  var p = null;
-  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
+  var p   = findProduct(pid);
   var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
   var t   = floorTier(p.fields, qty);
   [1,2,3,4].forEach(function(i) {
@@ -436,11 +437,14 @@ function onTier(pid) {
 
 function onSingle(pid) {
   var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
-  var p   = null;
-  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
   gItems[pid].singleQty = qty;
-  gItems[pid].unitPrice = p ? (p.fields.UnitPrice || 0) : 0;
+  gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
   recalc(pid);
+}
+
+function findProduct(pid) {
+  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) return gProducts[i]; }
+  return { fields: {} };
 }
 
 function floorTier(f, qty) {
@@ -479,7 +483,10 @@ function updateSummary() {
     if (!qty) return;
     var line = qty * (item.unitPrice || 0) + (item.setupFee || 0);
     grand += line;
-    rows.push('<div class="sum-row"><span class="sum-lbl">' + p.fields.ProductName + ' &times; ' + qty + '</span><span class="sum-val">$' + line.toFixed(2) + '</span></div>');
+    rows.push('<div class="sum-row">'
+      + '<span class="sum-lbl">' + (p.fields.ProductName || '') + ' &times; ' + qty + '</span>'
+      + '<span class="sum-val">$' + line.toFixed(2) + '</span>'
+      + '</div>');
   });
   document.getElementById('sum-lines').innerHTML = rows.length
     ? rows.join('')
@@ -487,24 +494,24 @@ function updateSummary() {
   document.getElementById('sum-total').textContent = '$' + grand.toFixed(2);
 }
 
-function openImg(url) {
+function openImg(url, caption) {
   var ov = document.createElement('div');
   ov.className = 'lightbox';
-  ov.innerHTML = '<img src="' + url + '" alt="Product image">';
-  ov.onclick = function() { ov.remove(); };
+  ov.innerHTML = '<img src="' + url + '" alt="' + (caption || '') + '">'
+    + (caption ? '<div class="img-caption">' + caption + ' &mdash; click anywhere to close</div>' : '');
+  ov.onclick = function() { document.body.removeChild(ov); };
   document.body.appendChild(ov);
 }
 
-// ── SUBMIT ────────────────────────────────────────────────────────────────────
 function doSubmit() {
   var name  = document.getElementById('f-name').value.trim();
   var email = document.getElementById('f-email').value.trim();
   var locId = document.getElementById('f-location').value;
   var notes = document.getElementById('f-notes').value.trim();
 
-  if (!name)  { alert('Please enter your name.');                          return; }
-  if (!email) { alert('Please enter your email address.');                  return; }
-  if (!locId) { alert('Please select a ship-to location.');                 return; }
+  if (!name)  { alert('Please enter your name.');             return; }
+  if (!email) { alert('Please enter your email address.');    return; }
+  if (!locId) { alert('Please select a ship-to location.');   return; }
 
   var active = gProducts.filter(function(p) { return (gItems[p.id].singleQty || 0) > 0; });
   if (!active.length) { alert('Please add at least one item before submitting.'); return; }
@@ -533,7 +540,7 @@ function doSubmit() {
       chain = chain.then(function() {
         var item = gItems[p.id];
         var sz   = item.sizes || {};
-        var lineFields = {
+        var lf   = {
           Order:         [order.id],
           Product:       [p.id],
           UnitSellPrice: item.unitPrice   || 0,
@@ -542,34 +549,26 @@ function doSubmit() {
           TierMinQty:    item.tierMinQty  || 0,
           Notes:         item.specialNote || ''
         };
-        if (locId !== 'no-location') lineFields.Location = [locId];
+        if (locId !== 'no-location') lf.Location = [locId];
         if (p.fields.InputType === 'SizeMatrix') {
-          lineFields.QtyXS  = sz['XS']  || 0;
-          lineFields.QtyS   = sz['S']   || 0;
-          lineFields.QtyM   = sz['M']   || 0;
-          lineFields.QtyL   = sz['L']   || 0;
-          lineFields.QtyXL  = sz['XL']  || 0;
-          lineFields.Qty2XL = sz['2XL'] || 0;
-          lineFields.Qty3XL = sz['3XL'] || 0;
-          lineFields.Qty4XL = sz['4XL'] || 0;
-          lineFields.Qty5XL = sz['5XL'] || 0;
-          lineFields.Qty6XL = sz['6XL'] || 0;
-          lineFields.SingleQty = 0;
+          lf.QtyXS=sz['XS']||0; lf.QtyS=sz['S']||0;   lf.QtyM=sz['M']||0;
+          lf.QtyL=sz['L']||0;   lf.QtyXL=sz['XL']||0; lf.Qty2XL=sz['2XL']||0;
+          lf.Qty3XL=sz['3XL']||0; lf.Qty4XL=sz['4XL']||0;
+          lf.Qty5XL=sz['5XL']||0; lf.Qty6XL=sz['6XL']||0;
+          lf.SingleQty=0;
         } else {
-          lineFields.QtyXS  = 0; lineFields.QtyS  = 0; lineFields.QtyM  = 0;
-          lineFields.QtyL   = 0; lineFields.QtyXL = 0; lineFields.Qty2XL = 0;
-          lineFields.Qty3XL = 0; lineFields.Qty4XL = 0; lineFields.Qty5XL = 0;
-          lineFields.Qty6XL = 0;
-          lineFields.SingleQty = item.singleQty || 0;
+          lf.QtyXS=0;lf.QtyS=0;lf.QtyM=0;lf.QtyL=0;lf.QtyXL=0;
+          lf.Qty2XL=0;lf.Qty3XL=0;lf.Qty4XL=0;lf.Qty5XL=0;lf.Qty6XL=0;
+          lf.SingleQty=item.singleQty||0;
         }
-        return apiPost('OrderLineItems', lineFields);
+        return apiPost('OrderLineItems', lf);
       });
     });
 
     return chain.then(function() {
-      var orderNum = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
+      var num = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
       document.getElementById('ok-msg').textContent =
-        'Order #' + orderNum + ' received. Your invoice will include product total, '
+        'Order #' + num + ' received. Your invoice will include product total, '
         + 'any applicable setup fees, and actual shipping cost once the order is ready to ship.';
       show('st-success');
     });
@@ -582,7 +581,6 @@ function doSubmit() {
   });
 }
 
-// ── UI HELPERS ────────────────────────────────────────────────────────────────
 function show(id) {
   ['st-loading','st-error','st-success','st-form'].forEach(function(s) {
     document.getElementById(s).style.display = s === id ? (s === 'st-form' ? 'block' : 'flex') : 'none';
