@@ -7,11 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --pri:#1a3c5e;--sec:#f4a823;--bg:#f7f7f5;--sur:#ffffff;
-  --bdr:#e5e4e0;--txt:#1a1a18;--mut:#6b6b68;--lgt:#9b9b98;
-  --r:10px;--rs:6px;
-}
+:root{--pri:#1a3c5e;--sec:#f4a823;--bg:#f7f7f5;--sur:#ffffff;--bdr:#e5e4e0;--txt:#1a1a18;--mut:#6b6b68;--lgt:#9b9b98;--r:10px;--rs:6px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5;min-height:100vh}
 .hdr{background:var(--sur);border-bottom:1px solid var(--bdr);padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
@@ -34,12 +30,12 @@ textarea{resize:vertical;min-height:72px}
 .sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);padding:0 2px;margin-bottom:8px}
 .prod-card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .prod-card.active{border-color:var(--pri);border-width:2px;box-shadow:0 2px 12px color-mix(in srgb,var(--pri) 12%,transparent)}
-.prod-imgs{display:flex;width:100%;background:var(--bg);border-bottom:1px solid var(--bdr);border-radius:var(--r) var(--r) 0 0;overflow:hidden;max-height:240px}
-.prod-img-full{flex:1;width:50%;object-fit:cover;cursor:zoom-in;transition:opacity .15s;display:block}
-.prod-img-full:hover{opacity:.92}
+.prod-imgs{display:flex;width:100%;background:var(--bg);border-bottom:1px solid var(--bdr);overflow:hidden;max-height:240px}
+.prod-img-full{flex:1;object-fit:cover;cursor:zoom-in;transition:opacity .15s;display:block;min-height:180px}
+.prod-img-full:hover{opacity:.9}
 .prod-img-full:not(:last-child){border-right:1px solid var(--bdr)}
 .prod-img-ph{width:100%;height:140px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:40px;border-bottom:1px solid var(--bdr)}
-.prod-hdr{display:flex;gap:12px;padding:14px 16px;align-items:flex-start}
+.prod-hdr{padding:14px 16px}
 .prod-name{font-size:15px;font-weight:600}
 .prod-code{font-size:11px;color:var(--mut);font-family:monospace;margin-top:1px}
 .prod-cat{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--bg);color:var(--mut);margin-top:5px}
@@ -47,7 +43,7 @@ textarea{resize:vertical;min-height:72px}
 .setup-note{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--mut);background:var(--bg);padding:2px 8px;border-radius:20px;margin-top:5px}
 .prod-body{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
 .size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}
-@media(max-width:380px){.size-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:400px){.size-grid{grid-template-columns:repeat(4,1fr)}}
 .sz-cell{display:flex;flex-direction:column;align-items:center;gap:3px}
 .sz-lbl{font-size:10px;font-weight:600;text-transform:uppercase;color:var(--mut)}
 .sz-inp{width:100%;text-align:center;padding:6px 2px;font-size:14px;font-weight:500}
@@ -84,7 +80,7 @@ textarea{resize:vertical;min-height:72px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ok-icon{width:52px;height:52px;background:#f0faf4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;color:#1d7a4a}
 .state-title{font-size:20px;font-weight:700;margin-bottom:7px}
-.state-sub{font-size:14px;color:var(--mut);max-width:360px;line-height:1.6}
+.state-sub{font-size:14px;color:var(--mut);max-width:380px;line-height:1.6}
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
 .lightbox img{max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain}
 </style>
@@ -93,13 +89,13 @@ textarea{resize:vertical;min-height:72px}
 
 <div id="st-loading" class="state-wrap">
   <div class="spin"></div>
-  <p style="color:var(--mut);font-size:14px;">Loading your order form...</p>
+  <p style="color:var(--mut);font-size:14px">Loading your order form...</p>
 </div>
 
 <div id="st-error" class="state-wrap" style="display:none">
   <div style="font-size:36px;margin-bottom:14px">&#9888;</div>
   <div class="state-title" id="err-title">Something went wrong</div>
-  <div class="state-sub"   id="err-sub">Please check your link and try again.</div>
+  <div class="state-sub" id="err-sub">Please check your link and try again.</div>
 </div>
 
 <div id="st-success" class="state-wrap" style="display:none">
@@ -113,11 +109,11 @@ textarea{resize:vertical;min-height:72px}
     <img id="brand-logo" alt="Logo">
     <div>
       <div class="hdr-name" id="co-name"></div>
-      <div class="hdr-tag"  id="co-tag">Place your order below</div>
+      <div class="hdr-tag" id="co-tag">Place your order below</div>
     </div>
   </div>
-
   <div class="wrap">
+
     <div class="card">
       <div class="card-title">Your information</div>
       <div class="row2">
@@ -146,13 +142,17 @@ textarea{resize:vertical;min-height:72px}
 
     <div class="card">
       <div class="card-title">Order summary</div>
-      <div id="sum-lines"><div style="font-size:13px;color:var(--lgt);padding:4px 0">No items added yet</div></div>
+      <div id="sum-lines">
+        <div style="font-size:13px;color:var(--lgt);padding:4px 0">No items added yet</div>
+      </div>
       <hr class="sum-divider">
       <div class="sum-total">
         <span class="sum-total-lbl">Subtotal</span>
         <span class="sum-total-val" id="sum-total">$0.00</span>
       </div>
-      <div style="font-size:11px;color:var(--lgt);margin-top:4px;text-align:right">+ shipping &amp; applicable taxes</div>
+      <div style="font-size:11px;color:var(--lgt);margin-top:4px;text-align:right">
+        + shipping &amp; applicable taxes
+      </div>
     </div>
 
     <div class="card">
@@ -163,49 +163,84 @@ textarea{resize:vertical;min-height:72px}
     </div>
 
     <button class="submit-btn" id="submit-btn" onclick="doSubmit()">Submit order</button>
+
   </div>
 </div>
 
 <script>
+// ── PROXY — your Netlify function URL ─────────────────────────────────────────
 const PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtable';
 
-let gCompany   = null;
-let gLocations = [];
-let gProducts  = [];
-let gItems     = {};
+// ── STATE ─────────────────────────────────────────────────────────────────────
+var gCompany   = null;
+var gLocations = [];
+var gProducts  = [];
+var gItems     = {};
 
-async function apiCall(path, method, body) {
-  const r = await fetch(PROXY, {
-    method: 'POST',
+// ── API ───────────────────────────────────────────────────────────────────────
+function apiCall(path, method, body) {
+  return fetch(PROXY, {
+    method:  'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ path, method, body })
+    body:    JSON.stringify({ path: path, method: method || 'GET', body: body })
+  }).then(function(r) { return r.json(); });
+}
+
+function apiGet(table, formula) {
+  var path = '/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&maxRecords=1';
+  return apiCall(path).then(function(d) { return (d.records && d.records[0]) ? d.records[0] : null; });
+}
+
+function apiGetByIds(table, ids) {
+  var formula = 'OR(' + ids.map(function(id) { return 'RECORD_ID()="' + id + '"'; }).join(',') + ')';
+  var path    = '/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&sort[0][field]=ProductCode&sort[0][direction]=asc';
+  return apiCall(path).then(function(d) { return d.records || []; });
+}
+
+function apiPost(table, fields) {
+  return apiCall('/' + table, 'POST', { fields: fields });
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+function init() {
+  var slug = new URLSearchParams(location.search).get('slug');
+  if (!slug) { showErr('Invalid link', 'No order form identifier found. Please check your link.'); return; }
+
+  apiGet('Companies', '{OrderFormSlug}="' + slug + '"').then(function(company) {
+    if (!company) { showErr('Form not found', 'No order form found for this link.'); return; }
+    if (!company.fields.OrderFormIsActive) { showErr('Form unavailable', 'This order form is not currently active.'); return; }
+
+    gCompany = company;
+    applyBrand(company.fields);
+
+    var productIds  = company.fields['Products']    || [];
+    var locationIds = company.fields['Locations 2'] || [];
+
+    Promise.all([
+      locationIds.length ? apiGetByIds('Locations', locationIds) : Promise.resolve([]),
+      productIds.length  ? apiGetByIds('Products',  productIds)  : Promise.resolve([])
+    ]).then(function(results) {
+      gLocations = results[0];
+      gProducts  = results[1];
+
+      if (!gProducts.length) { showErr('No products', 'No products are available for your account right now.'); return; }
+
+      fillLocations();
+      renderProducts();
+      show('st-form');
+    });
+  }).catch(function(e) {
+    console.error(e);
+    showErr('Connection error', 'Unable to load the form. Please try again or contact us directly.');
   });
-  return r.json();
 }
 
-async function apiGet(table, formula) {
-  const path = '/' + table + '?filterByFormula=' + encodeURIComponent(formula) + '&maxRecords=1';
-  const d    = await apiCall(path);
-  return d.records?.[0] || null;
-}
-
-async function apiGetByIds(table, ids) {
-  const formula = 'OR(' + ids.map(id => `RECORD_ID()="${id}"`).join(',') + ')';
-  const path    = '/' + table + '?filterByFormula=' + encodeURIComponent(formula)
-                + '&sort[0][field]=ProductCode&sort[0][direction]=asc';
-  const d = await apiCall(path);
-  return d.records || [];
-}
-
-async function apiPost(table, fields) {
-  return apiCall('/' + table, 'POST', { fields });
-}
-
+// ── BRAND ─────────────────────────────────────────────────────────────────────
 function applyBrand(f) {
   if (f.BrandPrimaryColor)   document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
   if (f.BrandSecondaryColor) document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
   if (f.BrandLogoUrl) {
-    const el = document.getElementById('brand-logo');
+    var el = document.getElementById('brand-logo');
     el.src = f.BrandLogoUrl;
     el.style.display = 'block';
   }
@@ -214,35 +249,39 @@ function applyBrand(f) {
   document.title = 'Order — ' + (f.CompanyName || '');
 }
 
+// ── LOCATIONS ─────────────────────────────────────────────────────────────────
 function fillLocations() {
-  const sel = document.getElementById('f-location');
+  var sel = document.getElementById('f-location');
   if (!gLocations.length) {
-    const o = document.createElement('option');
+    var o = document.createElement('option');
     o.value = 'no-location';
     o.textContent = 'No locations on file — we will confirm address';
     sel.appendChild(o);
     return;
   }
-  gLocations.forEach(loc => {
-    const o   = document.createElement('option');
-    o.value   = loc.id;
-    const f   = loc.fields;
-    const city = f.City  ? ', ' + f.City  : '';
-    const st   = f.State ? ', ' + f.State : '';
+  gLocations.forEach(function(loc) {
+    var o    = document.createElement('option');
+    o.value  = loc.id;
+    var f    = loc.fields;
+    var city = f.City  ? ', ' + f.City  : '';
+    var st   = f.State ? ', ' + f.State : '';
     o.textContent = (f.LocationName || f.Name || '') + city + st;
     if (f.IsDefaultShipping) o.selected = true;
     sel.appendChild(o);
   });
 }
 
+// ── RENDER PRODUCTS ───────────────────────────────────────────────────────────
 function renderProducts() {
-  const wrap = document.getElementById('products-wrap');
-  gProducts.forEach(p => {
+  var wrap = document.getElementById('products-wrap');
+  gProducts.forEach(function(p) {
     gItems[p.id] = {
-      singleQty: 0, sizes: {},
+      singleQty:   0,
+      sizes:       {},
       unitPrice:   p.fields.UnitPrice || 0,
       setupFee:    p.fields.SetupFee  || 0,
-      tierApplied: '', tierMinQty: 0,
+      tierApplied: '',
+      tierMinQty:  0,
       specialNote: ''
     };
     wrap.appendChild(makeProductCard(p));
@@ -250,156 +289,145 @@ function renderProducts() {
 }
 
 function makeProductCard(p) {
-  const f   = p.fields;
-  const div = document.createElement('div');
+  var f   = p.fields;
+  var div = document.createElement('div');
   div.className = 'prod-card';
   div.id = 'pc-' + p.id;
 
-  const imgs = (f.ProductImages || []).filter(i => i.url && i.type && i.type.startsWith('image'));
-  const imgHtml = imgs.length
-    ? `<div class="prod-imgs">${imgs.map(i =>
-        `<img class="prod-img-full" src="${i.url}" loading="lazy" onclick="openImg('${i.url}')">`
-      ).join('')}</div>`
+  var imgs = (f.ProductImages || []).filter(function(i) {
+    return i.url && i.type && i.type.indexOf('image') === 0;
+  });
+
+  var imgHtml = imgs.length
+    ? '<div class="prod-imgs">' + imgs.map(function(i) {
+        return '<img class="prod-img-full" src="' + i.url + '" loading="lazy" onclick="openImg(\'' + i.url + '\')">';
+      }).join('') + '</div>'
     : '<div class="prod-img-ph">&#9635;</div>';
 
-  const setupHtml = (f.SetupFee && f.SetupFee > 0)
-    ? `<div class="setup-note">+ $${f.SetupFee.toFixed(2)} setup${f.SetupFeeNote ? ' — ' + f.SetupFeeNote : ''}</div>`
+  var setupHtml = (f.SetupFee && f.SetupFee > 0)
+    ? '<div class="setup-note">+ $' + f.SetupFee.toFixed(2) + ' setup' + (f.SetupFeeNote ? ' — ' + f.SetupFeeNote : '') + '</div>'
     : '';
 
-  const bodyHtml = f.InputType === 'SizeMatrix' ? makeSizeMatrix(p)
-                 : f.InputType === 'QtyTiered'  ? makeTierInput(p)
-                 : makeSingleQty(p);
+  var inputHtml = f.InputType === 'SizeMatrix' ? makeSizeMatrix(p)
+                : f.InputType === 'QtyTiered'  ? makeTierInput(p)
+                : makeSingleQty(p);
 
-  div.innerHTML = `
-    ${imgHtml}
-    <div class="prod-hdr">
-      <div style="flex:1;min-width:0">
-        <div class="prod-name">${f.ProductName || ''}</div>
-        <div class="prod-code">${f.ProductCode || ''}</div>
-        <div class="prod-cat">${f.Category || ''}</div>
-        ${setupHtml}
-        ${f.Notes ? `<div class="prod-desc">${f.Notes}</div>` : ''}
-      </div>
-    </div>
-    <div class="prod-body">
-      ${bodyHtml}
-      <div class="prod-total-row">
-        <span class="ptl-lbl">Line total</span>
-        <div style="text-align:right">
-          <div class="ptl-val" id="ptv-${p.id}">$0.00</div>
-          <div class="tier-hint" id="pth-${p.id}"></div>
-        </div>
-      </div>
-      <div class="special-sec">
-        <div class="field">
-          <label>Special instructions</label>
-          <input type="text" id="ic-${p.id}" placeholder="Any special notes for this item..."
-            oninput="gItems['${p.id}'].specialNote=this.value">
-        </div>
-      </div>
-    </div>`;
+  div.innerHTML = imgHtml
+    + '<div class="prod-hdr"><div>'
+    + '<div class="prod-name">' + (f.ProductName || '') + '</div>'
+    + '<div class="prod-code">' + (f.ProductCode || '') + '</div>'
+    + '<div class="prod-cat">'  + (f.Category    || '') + '</div>'
+    + setupHtml
+    + (f.Notes ? '<div class="prod-desc">' + f.Notes + '</div>' : '')
+    + '</div></div>'
+    + '<div class="prod-body">'
+    + inputHtml
+    + '<div class="prod-total-row">'
+    + '<span class="ptl-lbl">Line total</span>'
+    + '<div style="text-align:right">'
+    + '<div class="ptl-val" id="ptv-' + p.id + '">$0.00</div>'
+    + '<div class="tier-hint" id="pth-' + p.id + '"></div>'
+    + '</div></div>'
+    + '<div class="special-sec"><div class="field">'
+    + '<label>Special instructions</label>'
+    + '<input type="text" id="ic-' + p.id + '" placeholder="Any special notes for this item..." '
+    + 'oninput="gItems[\'' + p.id + '\'].specialNote=this.value">'
+    + '</div></div></div>';
+
   return div;
 }
 
 function makeSizeMatrix(p) {
-  const sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
-  const cells = sizes.map(s =>
-    `<div class="sz-cell">
-       <div class="sz-lbl">${s}</div>
-       <input type="number" class="sz-inp" min="0" value="0"
-         data-pid="${p.id}" data-sz="${s}" oninput="onSize('${p.id}')">
-     </div>`
-  ).join('');
-  return `
-    <div style="font-size:12px;color:var(--mut);margin-bottom:8px">
-      Qty per size &mdash; $${(p.fields.UnitPrice||0).toFixed(2)} each
-    </div>
-    <div class="size-grid">${cells}</div>
-    <div style="font-size:13px;color:var(--mut);margin-top:3px">
-      Total units: <strong id="st-${p.id}">0</strong>
-    </div>`;
+  var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
+  var cells = sizes.map(function(s) {
+    return '<div class="sz-cell">'
+      + '<div class="sz-lbl">' + s + '</div>'
+      + '<input type="number" class="sz-inp" min="0" value="0" '
+      + 'data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')">'
+      + '</div>';
+  }).join('');
+  return '<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Qty per size &mdash; $'
+    + (p.fields.UnitPrice || 0).toFixed(2) + ' each</div>'
+    + '<div class="size-grid">' + cells + '</div>'
+    + '<div style="font-size:13px;color:var(--mut);margin-top:3px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
 }
 
 function makeTierInput(p) {
-  const f = p.fields;
-  const tiers = [
+  var f = p.fields;
+  var tiers = [
     { idx:1, min:f.Tier1MinQty, next:f.Tier2MinQty, price:f.Tier1Price },
     { idx:2, min:f.Tier2MinQty, next:f.Tier3MinQty, price:f.Tier2Price },
     { idx:3, min:f.Tier3MinQty, next:f.Tier4MinQty, price:f.Tier3Price },
-    { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price },
-  ].filter(t => t.min && t.price);
+    { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
+  ].filter(function(t) { return t.min && t.price; });
 
-  const cards = tiers.map(t => {
-    const lbl = t.next ? `${t.min}&ndash;${t.next-1} pcs` : `${t.min}+ pcs`;
-    return `<div class="tier-opt" id="to-${p.id}-${t.idx}">
-              <div class="t-qty">${lbl}</div>
-              <div class="t-price">$${t.price.toFixed(2)}</div>
-              <div class="t-each">each</div>
-            </div>`;
+  var cards = tiers.map(function(t) {
+    var lbl = t.next ? (t.min + '&ndash;' + (t.next - 1) + ' pcs') : (t.min + '+ pcs');
+    return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
+      + '<div class="t-qty">' + lbl + '</div>'
+      + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
+      + '<div class="t-each">each</div>'
+      + '</div>';
   }).join('');
 
-  return `
-    <div style="font-size:12px;color:var(--mut);margin-bottom:8px">
-      Select quantity &mdash; price tier applies automatically
-    </div>
-    <div class="tier-grid">${cards}</div>
-    <div class="field">
-      <label>Quantity</label>
-      <div class="qty-row">
-        <input type="number" id="qi-${p.id}" min="0" value="0"
-          placeholder="0" oninput="onTier('${p.id}')">
-        <span class="qty-note" id="qn-${p.id}"></span>
-      </div>
-    </div>`;
+  return '<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Select quantity &mdash; price tier applies automatically</div>'
+    + '<div class="tier-grid">' + cards + '</div>'
+    + '<div class="field"><label>Quantity</label>'
+    + '<div class="qty-row">'
+    + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onTier(\'' + p.id + '\')">'
+    + '<span class="qty-note" id="qn-' + p.id + '"></span>'
+    + '</div></div>';
 }
 
 function makeSingleQty(p) {
-  return `
-    <div class="field">
-      <label>Quantity &mdash; $${(p.fields.UnitPrice||0).toFixed(2)} each</label>
-      <div class="qty-row">
-        <input type="number" id="qi-${p.id}" min="0" value="0"
-          placeholder="0" oninput="onSingle('${p.id}')">
-      </div>
-    </div>`;
+  return '<div class="field"><label>Quantity &mdash; $' + (p.fields.UnitPrice || 0).toFixed(2) + ' each</label>'
+    + '<div class="qty-row">'
+    + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')">'
+    + '</div></div>';
 }
 
+// ── INTERACTION ───────────────────────────────────────────────────────────────
 function onSize(pid) {
-  const sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
-  let total = 0;
-  const smap = {};
-  sizes.forEach(s => {
-    const el = document.querySelector(`[data-pid="${pid}"][data-sz="${s}"]`);
-    const v  = parseInt(el?.value) || 0;
-    smap[s]  = v;
-    total   += v;
+  var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
+  var total = 0;
+  var smap  = {};
+  sizes.forEach(function(s) {
+    var el = document.querySelector('[data-pid="' + pid + '"][data-sz="' + s + '"]');
+    var v  = parseInt(el ? el.value : 0) || 0;
+    smap[s] = v;
+    total  += v;
   });
   gItems[pid].sizes     = smap;
   gItems[pid].singleQty = total;
-  const p = gProducts.find(x => x.id === pid);
-  gItems[pid].unitPrice = p.fields.UnitPrice || 0;
-  const el = document.getElementById('st-' + pid);
+  var p = null;
+  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
+  gItems[pid].unitPrice = p ? (p.fields.UnitPrice || 0) : 0;
+  var el = document.getElementById('st-' + pid);
   if (el) el.textContent = total;
   recalc(pid);
 }
 
 function onTier(pid) {
-  const p   = gProducts.find(x => x.id === pid);
-  const qty = parseInt(document.getElementById('qi-' + pid)?.value) || 0;
-  const t   = floorTier(p.fields, qty);
-  [1,2,3,4].forEach(i => document.getElementById('to-'+pid+'-'+i)?.classList.remove('active'));
+  var p = null;
+  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
+  var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
+  var t   = floorTier(p.fields, qty);
+  [1,2,3,4].forEach(function(i) {
+    var el = document.getElementById('to-' + pid + '-' + i);
+    if (el) el.classList.remove('active');
+  });
+  var qn = document.getElementById('qn-' + pid);
   if (t && qty > 0) {
-    document.getElementById('to-'+pid+'-'+t.idx)?.classList.add('active');
+    var to = document.getElementById('to-' + pid + '-' + t.idx);
+    if (to) to.classList.add('active');
     gItems[pid].unitPrice   = t.price;
-    gItems[pid].tierApplied = `Tier ${t.idx} — ${t.min}+ pcs @ $${t.price.toFixed(2)}`;
+    gItems[pid].tierApplied = 'Tier ' + t.idx + ' — ' + t.min + '+ pcs @ $' + t.price.toFixed(2);
     gItems[pid].tierMinQty  = t.min;
-    const qn = document.getElementById('qn-'+pid);
-    if (qn) qn.textContent = `$${t.price.toFixed(2)} each`;
+    if (qn) qn.textContent = '$' + t.price.toFixed(2) + ' each';
   } else {
     gItems[pid].unitPrice   = 0;
     gItems[pid].tierApplied = '';
     gItems[pid].tierMinQty  = 0;
-    const qn = document.getElementById('qn-'+pid);
     if (qn) qn.textContent = '';
   }
   gItems[pid].singleQty = qty;
@@ -407,52 +435,51 @@ function onTier(pid) {
 }
 
 function onSingle(pid) {
-  const p   = gProducts.find(x => x.id === pid);
-  const qty = parseInt(document.getElementById('qi-'+pid)?.value) || 0;
+  var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
+  var p   = null;
+  for (var i = 0; i < gProducts.length; i++) { if (gProducts[i].id === pid) { p = gProducts[i]; break; } }
   gItems[pid].singleQty = qty;
-  gItems[pid].unitPrice = p.fields.UnitPrice || 0;
+  gItems[pid].unitPrice = p ? (p.fields.UnitPrice || 0) : 0;
   recalc(pid);
 }
 
 function floorTier(f, qty) {
   if (!qty || qty <= 0) return null;
-  const tiers = [
+  var tiers = [
     { idx:4, min:f.Tier4MinQty, price:f.Tier4Price },
     { idx:3, min:f.Tier3MinQty, price:f.Tier3Price },
     { idx:2, min:f.Tier2MinQty, price:f.Tier2Price },
-    { idx:1, min:f.Tier1MinQty, price:f.Tier1Price },
-  ].filter(t => t.min && t.price);
-  for (const t of tiers) { if (qty >= t.min) return t; }
+    { idx:1, min:f.Tier1MinQty, price:f.Tier1Price }
+  ].filter(function(t) { return t.min && t.price; });
+  for (var i = 0; i < tiers.length; i++) { if (qty >= tiers[i].min) return tiers[i]; }
   return null;
 }
 
 function recalc(pid) {
-  const item  = gItems[pid];
-  const qty   = item.singleQty || 0;
-  const price = item.unitPrice || 0;
-  const setup = qty > 0 ? (item.setupFee || 0) : 0;
-  const line  = qty * price + setup;
-  const pv = document.getElementById('ptv-'+pid);
-  const ph = document.getElementById('pth-'+pid);
+  var item  = gItems[pid];
+  var qty   = item.singleQty || 0;
+  var price = item.unitPrice  || 0;
+  var setup = qty > 0 ? (item.setupFee || 0) : 0;
+  var line  = qty * price + setup;
+  var pv = document.getElementById('ptv-' + pid);
+  var ph = document.getElementById('pth-' + pid);
   if (pv) pv.textContent = '$' + line.toFixed(2);
   if (ph) ph.textContent = item.tierApplied || '';
-  document.getElementById('pc-'+pid)?.classList.toggle('active', qty > 0);
+  var pc = document.getElementById('pc-' + pid);
+  if (pc) { if (qty > 0) pc.classList.add('active'); else pc.classList.remove('active'); }
   updateSummary();
 }
 
 function updateSummary() {
-  let grand = 0;
-  const rows = [];
-  gProducts.forEach(p => {
-    const item = gItems[p.id];
-    const qty  = item.singleQty || 0;
+  var grand = 0;
+  var rows  = [];
+  gProducts.forEach(function(p) {
+    var item = gItems[p.id];
+    var qty  = item.singleQty || 0;
     if (!qty) return;
-    const line = qty * (item.unitPrice||0) + (item.setupFee||0);
+    var line = qty * (item.unitPrice || 0) + (item.setupFee || 0);
     grand += line;
-    rows.push(`<div class="sum-row">
-      <span class="sum-lbl">${p.fields.ProductName} &times; ${qty}</span>
-      <span class="sum-val">$${line.toFixed(2)}</span>
-    </div>`);
+    rows.push('<div class="sum-row"><span class="sum-lbl">' + p.fields.ProductName + ' &times; ' + qty + '</span><span class="sum-val">$' + line.toFixed(2) + '</span></div>');
   });
   document.getElementById('sum-lines').innerHTML = rows.length
     ? rows.join('')
@@ -461,95 +488,104 @@ function updateSummary() {
 }
 
 function openImg(url) {
-  const ov = document.createElement('div');
+  var ov = document.createElement('div');
   ov.className = 'lightbox';
-  ov.innerHTML = `<img src="${url}" alt="Product image">`;
-  ov.onclick = () => ov.remove();
+  ov.innerHTML = '<img src="' + url + '" alt="Product image">';
+  ov.onclick = function() { ov.remove(); };
   document.body.appendChild(ov);
 }
 
-async function doSubmit() {
-  const name  = document.getElementById('f-name').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const locId = document.getElementById('f-location').value;
-  const notes = document.getElementById('f-notes').value.trim();
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function doSubmit() {
+  var name  = document.getElementById('f-name').value.trim();
+  var email = document.getElementById('f-email').value.trim();
+  var locId = document.getElementById('f-location').value;
+  var notes = document.getElementById('f-notes').value.trim();
 
-  if (!name)  return alert('Please enter your name.');
-  if (!email) return alert('Please enter your email address.');
-  if (!locId) return alert('Please select a ship-to location.');
+  if (!name)  { alert('Please enter your name.');                          return; }
+  if (!email) { alert('Please enter your email address.');                  return; }
+  if (!locId) { alert('Please select a ship-to location.');                 return; }
 
-  const active = gProducts.filter(p => (gItems[p.id].singleQty || 0) > 0);
-  if (!active.length) return alert('Please add at least one item before submitting.');
+  var active = gProducts.filter(function(p) { return (gItems[p.id].singleQty || 0) > 0; });
+  if (!active.length) { alert('Please add at least one item before submitting.'); return; }
 
-  const btn = document.getElementById('submit-btn');
+  var btn = document.getElementById('submit-btn');
   btn.disabled    = true;
   btn.textContent = 'Submitting...';
 
-  try {
-    const locField = locId === 'no-location' ? {} : { Location: [locId] };
+  var orderFields = {
+    Company:       [gCompany.id],
+    OrderStatus:   'Submitted',
+    NeedsProof:    false,
+    ProofStatus:   'NotRequired',
+    IsBlindShip:   true,
+    ShippingNote:  'TBD — added to invoice',
+    SubmittedDate: new Date().toISOString().split('T')[0],
+    OrderNotes:    'Submitted by: ' + name + ' (' + email + ')' + (notes ? '\n\n' + notes : '')
+  };
+  if (locId !== 'no-location') orderFields.Location = [locId];
 
-    const order = await apiPost('Orders', {
-      Company:       [gCompany.id],
-      ...locField,
-      OrderStatus:   'Submitted',
-      NeedsProof:    false,
-      ProofStatus:   'NotRequired',
-      IsBlindShip:   true,
-      ShippingNote:  'TBD — added to invoice',
-      SubmittedDate: new Date().toISOString().split('T')[0],
-      OrderNotes:    'Submitted by: ' + name + ' (' + email + ')' + (notes ? '\n\n' + notes : '')
-    });
-
+  apiPost('Orders', orderFields).then(function(order) {
     if (!order.id) throw new Error('Order record not created');
 
-    for (const p of active) {
-      const item = gItems[p.id];
-      const sz   = item.sizes || {};
-      const lineFields = {
-        Order:         [order.id],
-        Product:       [p.id],
-        UnitSellPrice: item.unitPrice   || 0,
-        SetupFee:      item.setupFee    || 0,
-        TierApplied:   item.tierApplied || '',
-        TierMinQty:    item.tierMinQty  || 0,
-        Notes:         item.specialNote || ''
-      };
-      if (locId !== 'no-location') lineFields.Location = [locId];
-      if (p.fields.InputType === 'SizeMatrix') {
-        Object.assign(lineFields, {
-          QtyXS:  sz['XS']  || 0, QtyS:   sz['S']   || 0,
-          QtyM:   sz['M']   || 0, QtyL:   sz['L']   || 0,
-          QtyXL:  sz['XL']  || 0, Qty2XL: sz['2XL'] || 0,
-          Qty3XL: sz['3XL'] || 0, Qty4XL: sz['4XL'] || 0,
-          Qty5XL: sz['5XL'] || 0, Qty6XL: sz['6XL'] || 0,
-          SingleQty: 0
-        });
-      } else {
-        Object.assign(lineFields, {
-          QtyXS:0,QtyS:0,QtyM:0,QtyL:0,QtyXL:0,
-          Qty2XL:0,Qty3XL:0,Qty4XL:0,Qty5XL:0,Qty6XL:0,
-          SingleQty: item.singleQty || 0
-        });
-      }
-      await apiPost('OrderLineItems', lineFields);
-    }
+    var chain = Promise.resolve();
+    active.forEach(function(p) {
+      chain = chain.then(function() {
+        var item = gItems[p.id];
+        var sz   = item.sizes || {};
+        var lineFields = {
+          Order:         [order.id],
+          Product:       [p.id],
+          UnitSellPrice: item.unitPrice   || 0,
+          SetupFee:      item.setupFee    || 0,
+          TierApplied:   item.tierApplied || '',
+          TierMinQty:    item.tierMinQty  || 0,
+          Notes:         item.specialNote || ''
+        };
+        if (locId !== 'no-location') lineFields.Location = [locId];
+        if (p.fields.InputType === 'SizeMatrix') {
+          lineFields.QtyXS  = sz['XS']  || 0;
+          lineFields.QtyS   = sz['S']   || 0;
+          lineFields.QtyM   = sz['M']   || 0;
+          lineFields.QtyL   = sz['L']   || 0;
+          lineFields.QtyXL  = sz['XL']  || 0;
+          lineFields.Qty2XL = sz['2XL'] || 0;
+          lineFields.Qty3XL = sz['3XL'] || 0;
+          lineFields.Qty4XL = sz['4XL'] || 0;
+          lineFields.Qty5XL = sz['5XL'] || 0;
+          lineFields.Qty6XL = sz['6XL'] || 0;
+          lineFields.SingleQty = 0;
+        } else {
+          lineFields.QtyXS  = 0; lineFields.QtyS  = 0; lineFields.QtyM  = 0;
+          lineFields.QtyL   = 0; lineFields.QtyXL = 0; lineFields.Qty2XL = 0;
+          lineFields.Qty3XL = 0; lineFields.Qty4XL = 0; lineFields.Qty5XL = 0;
+          lineFields.Qty6XL = 0;
+          lineFields.SingleQty = item.singleQty || 0;
+        }
+        return apiPost('OrderLineItems', lineFields);
+      });
+    });
 
-    document.getElementById('ok-msg').textContent =
-      'Order #' + (order.fields?.OrderNumber || order.id.slice(-6).toUpperCase()) +
-      ' received. Your invoice will include product total, any applicable setup fees, and actual shipping cost once the order is ready to ship.';
-    show('st-success');
+    return chain.then(function() {
+      var orderNum = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
+      document.getElementById('ok-msg').textContent =
+        'Order #' + orderNum + ' received. Your invoice will include product total, '
+        + 'any applicable setup fees, and actual shipping cost once the order is ready to ship.';
+      show('st-success');
+    });
 
-  } catch(e) {
+  }).catch(function(e) {
     console.error(e);
     btn.disabled    = false;
     btn.textContent = 'Submit order';
     alert('Submission failed — please try again or contact us directly.');
-  }
+  });
 }
 
+// ── UI HELPERS ────────────────────────────────────────────────────────────────
 function show(id) {
-  ['st-loading','st-error','st-success','st-form'].forEach(s => {
-    document.getElementById(s).style.display = s === id ? (s==='st-form'?'block':'flex') : 'none';
+  ['st-loading','st-error','st-success','st-form'].forEach(function(s) {
+    document.getElementById(s).style.display = s === id ? (s === 'st-form' ? 'block' : 'flex') : 'none';
   });
 }
 
