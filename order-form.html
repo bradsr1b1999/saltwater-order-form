@@ -8,133 +8,143 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pri:#1a3c5e;--sec:#00d9e5;--bg:#e6fafb;--sur:#ffffff;
-  --bdr:#d0eef0;--txt:#1a1a18;--mut:#5a6b6c;--lgt:#8aa0a2;
-  --r:12px;--rs:8px;
+  --pri:#1a3c5e;--sec:#00d9e5;--bg:#aaeef3;--sur:#ffffff;
+  --bdr:#d0eef0;--txt:#1a1a18;--mut:#4a6066;--lgt:#7a9ca0;
+  --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:16px;line-height:1.5;min-height:100vh}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}
 
-.hdr{background:var(--pri);padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10;min-height:68px}
-#brand-logo{height:44px;width:auto;display:none;object-fit:contain}
-.hdr-name{font-size:18px;font-weight:600;color:white}
-.hdr-tag{font-size:13px;color:rgba(255,255,255,.7);margin-top:1px}
+.hdr{background:var(--pri);padding:20px 24px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;min-height:88px}
+#brand-logo{height:72px;width:auto;display:none;object-fit:contain}
+.hdr-name{font-size:22px;font-weight:600;color:white}
+.hdr-tag{font-size:15px;color:rgba(255,255,255,.7);margin-top:2px}
 
-.wrap{max-width:680px;margin:0 auto;padding:20px 16px 100px}
+.wrap{max-width:720px;margin:0 auto;padding:24px 18px 120px}
 
-.card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:14px}
-.card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:14px}
+.card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);padding:26px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:18px}
 
-.field{margin-bottom:12px}
+.field{margin-bottom:16px}
 .field:last-child{margin-bottom:0}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
-@media(max-width:480px){.row2{grid-template-columns:1fr}.row3{grid-template-columns:1fr}}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}.row3{grid-template-columns:1fr}}
 
-label{display:block;font-size:13px;font-weight:500;color:var(--mut);margin-bottom:5px}
+label{display:block;font-size:15px;font-weight:500;color:var(--mut);margin-bottom:6px}
 .req{color:#e24b4a;margin-left:2px}
 
 input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{
-  width:100%;padding:11px 13px;border:1.5px solid var(--bdr);border-radius:var(--rs);
-  font-family:inherit;font-size:16px;color:var(--txt);background:var(--sur);
+  width:100%;padding:14px 16px;border:1.5px solid var(--bdr);border-radius:var(--rs);
+  font-family:inherit;font-size:17px;color:var(--txt);background:var(--sur);
   transition:border-color .15s;-webkit-appearance:none;appearance:none
 }
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px color-mix(in srgb,var(--pri) 12%,transparent)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px color-mix(in srgb,var(--pri) 10%,transparent)}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button{opacity:1}
-textarea{resize:vertical;min-height:80px}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6b6c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+textarea{resize:vertical;min-height:90px}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6066' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 
-.sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 2px;margin-bottom:10px;margin-top:4px}
+.sec-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 2px;margin-bottom:12px;margin-top:6px}
 
-.prod-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);margin-bottom:14px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.prod-card.active{border-color:var(--pri);box-shadow:0 3px 16px color-mix(in srgb,var(--pri) 14%,transparent)}
+.prod-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);margin-bottom:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.prod-card.active{border-color:var(--pri);box-shadow:0 4px 20px color-mix(in srgb,var(--pri) 16%,transparent)}
 
-.prod-imgs{display:flex;width:100%;background:#111;overflow:hidden;height:300px}
-.prod-imgs.single{height:340px}
+.prod-imgs{display:flex;width:100%;background:#111;overflow:hidden;height:340px}
+.prod-imgs.single{height:380px}
 .prod-img-full{flex:1;width:50%;height:100%;object-fit:cover;object-position:center top;display:block;cursor:zoom-in;transition:opacity .15s}
 .prod-img-full:hover{opacity:.88}
 .prod-img-full:not(:last-child){border-right:1px solid rgba(255,255,255,.1)}
-.prod-img-ph{width:100%;height:180px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:44px}
+.prod-img-ph{width:100%;height:200px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:52px}
 
-.prod-hdr{padding:16px 18px 0}
-.prod-name{font-size:17px;font-weight:600;margin-bottom:3px}
-.prod-code{font-size:12px;color:var(--mut);font-family:monospace}
-.prod-cat{display:inline-block;font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;background:color-mix(in srgb,var(--pri) 8%,white);color:var(--pri);margin-top:7px}
-.prod-desc{font-size:13px;color:var(--mut);margin-top:8px;line-height:1.55}
+.prod-hdr{padding:20px 22px 0}
+.prod-name{font-size:20px;font-weight:600;margin-bottom:4px}
+.prod-code{font-size:13px;color:var(--mut);font-family:monospace}
+.prod-cat{display:inline-block;font-size:13px;font-weight:500;padding:4px 12px;border-radius:20px;background:color-mix(in srgb,var(--pri) 8%,white);color:var(--pri);margin-top:8px}
+.prod-desc{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.55}
 
-.setup-block{background:color-mix(in srgb,var(--sec) 12%,white);border:1px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:10px 14px;margin-top:10px}
+.setup-block{background:color-mix(in srgb,var(--sec) 12%,white);border:1.5px solid color-mix(in srgb,var(--sec) 35%,white);border-radius:var(--rs);padding:14px 16px;margin-top:14px}
 .setup-line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.setup-label{font-size:13px;font-weight:600;color:var(--pri)}
-.setup-amount{font-size:13px;font-weight:600;color:var(--pri);white-space:nowrap}
-.setup-note-text{font-size:12px;color:var(--mut);margin-top:3px;line-height:1.45}
-.setup-art-note{font-size:11px;color:var(--mut);margin-top:6px;padding-top:6px;border-top:1px solid color-mix(in srgb,var(--sec) 20%,white);line-height:1.4}
+.setup-label{font-size:15px;font-weight:600;color:var(--pri)}
+.setup-amount{font-size:15px;font-weight:700;color:var(--pri);white-space:nowrap}
+.setup-note-text{font-size:13px;color:var(--mut);margin-top:4px;line-height:1.5}
+.setup-art-note{font-size:12px;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--sec) 25%,white);line-height:1.45}
 
-.prod-body{padding:16px 18px 18px;border-top:1px solid var(--bdr);margin-top:14px}
+.prod-body{padding:20px 22px 22px;border-top:1.5px solid var(--bdr);margin-top:18px}
 
-.size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}
-@media(max-width:420px){.size-grid{grid-template-columns:repeat(4,1fr)}}
-.sz-cell{display:flex;flex-direction:column;align-items:center;gap:4px}
-.sz-lbl{font-size:11px;font-weight:600;text-transform:uppercase;color:var(--mut)}
-.sz-inp{width:100%;text-align:center;padding:8px 2px;font-size:15px;font-weight:600;border-radius:var(--rs)}
+.size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
+@media(max-width:460px){.size-grid{grid-template-columns:repeat(4,1fr)}}
+.sz-cell{display:flex;flex-direction:column;align-items:center;gap:5px}
+.sz-lbl{font-size:12px;font-weight:600;text-transform:uppercase;color:var(--mut)}
+.sz-inp{width:100%;text-align:center;padding:10px 2px;font-size:17px;font-weight:600;border-radius:var(--rs)}
 
-.tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
-@media(min-width:460px){.tier-grid{grid-template-columns:repeat(4,1fr)}}
-.tier-opt{border:1.5px solid var(--bdr);border-radius:var(--rs);padding:10px 8px;text-align:center;background:var(--sur);transition:border-color .15s,background .15s;cursor:default}
+.tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:480px){.tier-grid{grid-template-columns:repeat(4,1fr)}}
+.tier-opt{border:1.5px solid var(--bdr);border-radius:var(--rs);padding:12px 8px;text-align:center;background:var(--sur);transition:border-color .15s,background .15s}
 .tier-opt.active{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 7%,white)}
-.t-qty{font-size:11px;color:var(--mut);margin-bottom:3px}
-.t-price{font-size:18px;font-weight:700}
+.t-qty{font-size:12px;color:var(--mut);margin-bottom:4px}
+.t-price{font-size:20px;font-weight:700}
 .tier-opt.active .t-price{color:var(--pri)}
-.t-each{font-size:11px;color:var(--lgt)}
+.t-each{font-size:12px;color:var(--lgt)}
 
-.tier-warn{background:#fffbeb;border:1px solid #e9b84a;border-radius:var(--rs);padding:8px 12px;font-size:13px;color:#7a5a00;margin-top:8px;display:none}
+.tier-warn{background:#fffbeb;border:1.5px solid #e9b84a;border-radius:var(--rs);padding:10px 14px;font-size:15px;color:#7a5a00;margin-top:10px;display:none}
 
-.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:12px;border-top:1px solid var(--bdr);margin-top:14px}
-.ptl-lbl{font-size:14px;color:var(--mut)}
-.ptl-val{font-size:19px;font-weight:700}
-.tier-hint{font-size:12px;color:var(--pri);margin-top:3px;text-align:right}
-.ship-inline{font-size:12px;color:var(--lgt);margin-top:4px;text-align:right}
+.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:14px;border-top:1.5px solid var(--bdr);margin-top:16px}
+.ptl-lbl{font-size:16px;color:var(--mut)}
+.ptl-val{font-size:22px;font-weight:700}
+.tier-hint{font-size:13px;color:var(--pri);margin-top:4px;text-align:right}
+.ship-inline{font-size:13px;color:var(--lgt);margin-top:4px;text-align:right}
 
-.special-sec{margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
+.special-sec{margin-top:16px;padding-top:16px;border-top:1.5px solid var(--bdr)}
 
-.qty-row{display:flex;align-items:center;gap:12px}
-.qty-row input{width:130px}
-.qty-note{font-size:14px;color:var(--mut)}
+.qty-row{display:flex;align-items:center;gap:14px}
+.qty-row input{width:140px}
+.qty-note{font-size:16px;color:var(--mut)}
 
-.sum-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:15px}
+.upload-zone{border:2px dashed var(--bdr);border-radius:var(--rs);padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
+.upload-zone:hover{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 3%,white)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:32px;color:var(--lgt);margin-bottom:10px}
+.upload-title{font-size:16px;font-weight:500;color:var(--txt);margin-bottom:4px}
+.upload-sub{font-size:14px;color:var(--mut)}
+.upload-files{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.upload-tag{background:color-mix(in srgb,var(--pri) 8%,white);border:1px solid color-mix(in srgb,var(--pri) 20%,white);border-radius:6px;padding:5px 10px;font-size:13px;color:var(--pri);display:flex;align-items:center;gap:6px}
+.upload-tag button{background:none;border:none;cursor:pointer;color:var(--pri);font-size:15px;padding:0;line-height:1}
+
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:16px}
 .sum-lbl{color:var(--mut)}
 .sum-val{font-weight:500}
-.sum-divider{border:none;border-top:1px solid var(--bdr);margin:8px 0}
-.sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:6px}
-.sum-total-lbl{font-size:16px;font-weight:600}
-.sum-total-val{font-size:24px;font-weight:700;color:var(--pri)}
+.sum-divider{border:none;border-top:1.5px solid var(--bdr);margin:10px 0}
+.sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+.sum-total-lbl{font-size:18px;font-weight:600}
+.sum-total-val{font-size:28px;font-weight:700;color:var(--pri)}
 
-.submit-btn{width:100%;padding:16px;background:var(--pri);color:white;border:none;border-radius:var(--r);font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:6px;letter-spacing:.01em}
+.submit-btn{width:100%;padding:18px;background:var(--pri);color:white;border:none;border-radius:var(--r);font-family:inherit;font-size:19px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:8px;letter-spacing:.01em}
 .submit-btn:hover{opacity:.9}
 .submit-btn:active{transform:scale(.99)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
 .state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
-.spin{width:36px;height:36px;border:3px solid var(--bdr);border-top-color:var(--pri);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:16px}
+.spin{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--pri);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:18px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ok-icon{width:56px;height:56px;background:#e6fdf2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px;color:#1d7a4a}
-.state-title{font-size:22px;font-weight:700;margin-bottom:8px}
-.state-sub{font-size:15px;color:var(--mut);max-width:400px;line-height:1.65}
+.ok-icon{width:64px;height:64px;background:#e6fdf2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;color:#1d7a4a}
+.state-title{font-size:24px;font-weight:700;margin-bottom:10px}
+.state-sub{font-size:17px;color:var(--mut);max-width:420px;line-height:1.65}
 
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;flex-direction:column;gap:12px}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;flex-direction:column;gap:14px}
 .lightbox img{max-width:100%;max-height:85vh;border-radius:8px;object-fit:contain}
-.lightbox-cap{color:rgba(255,255,255,.55);font-size:13px}
+.lightbox-cap{color:rgba(255,255,255,.55);font-size:14px}
 </style>
 </head>
 <body>
 
 <div id="st-loading" class="state-wrap">
   <div class="spin"></div>
-  <p style="color:var(--mut);font-size:15px">Loading your order form...</p>
+  <p style="color:var(--mut);font-size:17px">Loading your order form...</p>
 </div>
 
 <div id="st-error" class="state-wrap" style="display:none">
-  <div style="font-size:40px;margin-bottom:16px">&#9888;</div>
+  <div style="font-size:44px;margin-bottom:18px">&#9888;</div>
   <div class="state-title" id="err-title">Something went wrong</div>
   <div class="state-sub" id="err-sub">Please check your link and try again.</div>
 </div>
@@ -174,8 +184,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
           <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel">
         </div>
         <div class="field">
-          <label>Your location name <span class="req">*</span></label>
-          <input type="text" id="f-locname" placeholder="eg Voda of Sarasota">
+          <label>Location name <span class="req">*</span></label>
+          <input type="text" id="f-locname" placeholder="eg Voda of Sarasota, Store #4...">
         </div>
       </div>
     </div>
@@ -227,15 +237,29 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="card">
       <div class="card-title">Order summary</div>
       <div id="sum-lines">
-        <div style="font-size:14px;color:var(--lgt);padding:4px 0">No items added yet</div>
+        <div style="font-size:16px;color:var(--lgt);padding:4px 0">No items added yet</div>
       </div>
       <hr class="sum-divider">
       <div class="sum-total">
         <span class="sum-total-lbl">Subtotal</span>
         <span class="sum-total-val" id="sum-total">$0.00</span>
       </div>
-      <div style="font-size:12px;color:var(--lgt);margin-top:5px;text-align:right">
+      <div style="font-size:14px;color:var(--lgt);margin-top:6px;text-align:right">
         + shipping &amp; applicable taxes added to invoice
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Art files</div>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="art-files" multiple accept=".png,.jpg,.jpeg,.pdf,.svg,.ai,.eps" onchange="handleFiles(this.files)">
+        <div class="upload-icon">&#8679;</div>
+        <div class="upload-title">Upload your art files</div>
+        <div class="upload-sub">PNG, JPG, PDF, SVG, AI, EPS &mdash; multiple files supported</div>
+      </div>
+      <div class="upload-files" id="file-list"></div>
+      <div style="font-size:14px;color:var(--lgt);margin-top:10px">
+        Don't have art ready? No problem &mdash; we will follow up to collect files before production.
       </div>
     </div>
 
@@ -247,16 +271,15 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     </div>
 
     <button class="submit-btn" id="submit-btn" onclick="doSubmit()">Submit order</button>
-
   </div>
 </div>
 
 <script>
 var PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtable';
-
-var gCompany   = null;
-var gProducts  = [];
-var gItems     = {};
+var gCompany  = null;
+var gProducts = [];
+var gItems    = {};
+var gFiles    = [];
 
 function apiCall(path, method, body) {
   return fetch(PROXY, {
@@ -283,6 +306,30 @@ function apiPost(table, fields) {
   return apiCall('/' + table, 'POST', { fields: fields });
 }
 
+function apiUploadFile(recordId, file) {
+  return new Promise(function(resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var base64 = e.target.result.split(',')[1];
+      fetch(PROXY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          path: '/Orders/' + recordId + '/ArtFiles',
+          method: 'POST',
+          body: {
+            contentType: file.type || 'application/octet-stream',
+            filename: file.name,
+            file: base64
+          }
+        })
+      }).then(function(r) { return r.json(); }).then(resolve).catch(reject);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function init() {
   var slug = new URLSearchParams(location.search).get('slug');
   if (!slug) { showErr('Invalid link', 'No order form identifier found. Please check your link.'); return; }
@@ -301,7 +348,6 @@ function init() {
       renderProducts();
       show('st-form');
     });
-
   }).catch(function(e) {
     console.error('Init error:', e);
     showErr('Connection error', 'Unable to load the form. Please try again or contact us directly.');
@@ -309,17 +355,11 @@ function init() {
 }
 
 function applyBrand(f) {
-  if (f.BrandPrimaryColor) {
-    document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
-  }
+  if (f.BrandPrimaryColor) document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
-    var sec = f.BrandSecondaryColor;
-    var tint = hexToTint(sec, 0.35);
-    if (tint) {
-      document.documentElement.style.setProperty('--bg',  tint);
-      document.documentElement.style.setProperty('--bdr', hexToTint(sec, 0.5));
-    }
+    var tint = hexToTint(f.BrandSecondaryColor, 0.35);
+    if (tint) document.documentElement.style.setProperty('--bg', tint);
   }
   var logoUrl = f.BrandLogoUrlWhite || f.BrandLogoUrl;
   if (logoUrl) {
@@ -340,10 +380,33 @@ function hexToTint(hex, opacity) {
   var r = parseInt(hex.substring(0,2),16);
   var g = parseInt(hex.substring(2,4),16);
   var b = parseInt(hex.substring(4,6),16);
-  var tr = Math.round(r * opacity + 255 * (1 - opacity));
-  var tg = Math.round(g * opacity + 255 * (1 - opacity));
-  var tb = Math.round(b * opacity + 255 * (1 - opacity));
-  return 'rgb(' + tr + ',' + tg + ',' + tb + ')';
+  return 'rgb(' + Math.round(r*opacity+255*(1-opacity)) + ','
+               + Math.round(g*opacity+255*(1-opacity)) + ','
+               + Math.round(b*opacity+255*(1-opacity)) + ')';
+}
+
+function handleFiles(files) {
+  for (var i = 0; i < files.length; i++) {
+    gFiles.push(files[i]);
+  }
+  renderFileList();
+}
+
+function removeFile(idx) {
+  gFiles.splice(idx, 1);
+  renderFileList();
+}
+
+function renderFileList() {
+  var list = document.getElementById('file-list');
+  list.innerHTML = '';
+  gFiles.forEach(function(f, idx) {
+    var tag = document.createElement('div');
+    tag.className = 'upload-tag';
+    tag.innerHTML = '<span>' + f.name + '</span>'
+      + '<button onclick="removeFile(' + idx + ')" title="Remove">&#215;</button>';
+    list.appendChild(tag);
+  });
 }
 
 function renderProducts() {
@@ -388,10 +451,10 @@ function makeProductCard(p) {
     setupHtml = '<div class="setup-block">'
       + '<div class="setup-line">'
       + '<span class="setup-label">Setup fee</span>'
-      + '<span class="setup-amount">$' + f.SetupFee.toFixed(2) + '</span>'
+      + '<span class="setup-amount">$' + f.SetupFee.toFixed(2) + ' per design</span>'
       + '</div>'
       + (f.SetupFeeNote ? '<div class="setup-note-text">' + f.SetupFeeNote + '</div>' : '')
-      + '<div class="setup-art-note">Additional setup fees may apply based on number of art changes or design variations.</div>'
+      + '<div class="setup-art-note">Additional setup fees may apply based on number of art changes or design variations. Note your design details in special instructions below.</div>'
       + '</div>';
   }
 
@@ -436,10 +499,10 @@ function makeSizeMatrix(p) {
       + 'data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')">'
       + '</div>';
   }).join('');
-  return '<div style="font-size:13px;color:var(--mut);margin-bottom:10px;font-weight:500">'
+  return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">'
     + 'Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
     + '<div class="size-grid">' + cells + '</div>'
-    + '<div style="font-size:14px;color:var(--mut);margin-top:5px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
+    + '<div style="font-size:16px;color:var(--mut);margin-top:6px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
 }
 
 function makeTierInput(p) {
@@ -450,9 +513,7 @@ function makeTierInput(p) {
     { idx:3, min:f.Tier3MinQty, next:f.Tier4MinQty, price:f.Tier3Price },
     { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
   ].filter(function(t) { return t.min && t.price; });
-
   var minQty = tiers.length ? tiers[0].min : 0;
-
   var cards = tiers.map(function(t) {
     var lbl = t.next ? (t.min + '&ndash;' + (t.next-1) + ' pcs') : (t.min + '+ pcs');
     return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
@@ -460,8 +521,7 @@ function makeTierInput(p) {
       + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
       + '<div class="t-each">each</div></div>';
   }).join('');
-
-  return '<div style="font-size:13px;color:var(--mut);margin-bottom:10px;font-weight:500">Select quantity &mdash; price tier applies automatically</div>'
+  return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">Select quantity &mdash; price tier applies automatically</div>'
     + '<div class="tier-grid">' + cards + '</div>'
     + '<div class="field"><label>Quantity</label>'
     + '<div class="qty-row">'
@@ -510,15 +570,12 @@ function onTier(pid) {
     { idx:4, min:f.Tier4MinQty, price:f.Tier4Price }
   ].filter(function(x) { return x.min && x.price; });
   var minQty = tiers.length ? tiers[0].min : 0;
-
   [1,2,3,4].forEach(function(i) {
     var el = document.getElementById('to-' + pid + '-' + i);
     if (el) el.classList.remove('active');
   });
-
   var warn = document.getElementById('tw-' + pid);
   var qn   = document.getElementById('qn-' + pid);
-
   if (qty > 0 && qty < minQty) {
     if (warn) warn.style.display = 'block';
     gItems[pid].unitPrice   = tiers.length ? tiers[0].price : 0;
@@ -531,7 +588,7 @@ function onTier(pid) {
       var to = document.getElementById('to-' + pid + '-' + t.idx);
       if (to) to.classList.add('active');
       gItems[pid].unitPrice   = t.price;
-      gItems[pid].tierApplied = 'Tier ' + t.idx + ' — ' + t.min + '+ pcs @ $' + t.price.toFixed(2);
+      gItems[pid].tierApplied = 'Tier ' + t.idx + ' - ' + t.min + '+ pcs @ $' + t.price.toFixed(2);
       gItems[pid].tierMinQty  = t.min;
       if (qn) qn.textContent = '$' + t.price.toFixed(2) + ' each';
     } else {
@@ -594,12 +651,12 @@ function updateSummary() {
     var line = qty * (item.unitPrice || 0) + (item.setupFee || 0);
     grand += line;
     rows.push('<div class="sum-row">'
-      + '<span class="sum-lbl">' + (p.fields.ProductName || '') + ' &times; ' + qty + '</span>'
+      + '<span class="sum-lbl">' + (p.fields.ProductName || '') + ' x ' + qty + '</span>'
       + '<span class="sum-val">$' + line.toFixed(2) + '</span></div>');
   });
   document.getElementById('sum-lines').innerHTML = rows.length
     ? rows.join('')
-    : '<div style="font-size:14px;color:var(--lgt);padding:4px 0">No items added yet</div>';
+    : '<div style="font-size:16px;color:var(--lgt);padding:4px 0">No items added yet</div>';
   document.getElementById('sum-total').textContent = '$' + grand.toFixed(2);
 }
 
@@ -607,7 +664,7 @@ function openImg(url, caption) {
   var ov = document.createElement('div');
   ov.className = 'lightbox';
   ov.innerHTML = '<img src="' + url + '" alt="' + (caption||'') + '">'
-    + '<div class="lightbox-cap">' + (caption ? caption + ' &mdash; ' : '') + 'tap to close</div>';
+    + '<div class="lightbox-cap">' + (caption ? caption + ' - ' : '') + 'tap to close</div>';
   ov.onclick = function() { document.body.removeChild(ov); };
   document.body.appendChild(ov);
 }
@@ -618,6 +675,7 @@ function doSubmit() {
   var phone   = document.getElementById('f-phone').value.trim();
   var locname = document.getElementById('f-locname').value.trim();
   var addr1   = document.getElementById('f-addr1').value.trim();
+  var addr2   = document.getElementById('f-addr2').value.trim();
   var city    = document.getElementById('f-city').value.trim();
   var state   = document.getElementById('f-state').value;
   var zip     = document.getElementById('f-zip').value.trim();
@@ -639,23 +697,24 @@ function doSubmit() {
   btn.disabled    = true;
   btn.textContent = 'Submitting...';
 
-  var shipAddr = addr1 + (document.getElementById('f-addr2').value.trim() ? ', ' + document.getElementById('f-addr2').value.trim() : '')
-    + ', ' + city + ', ' + state + ' ' + zip;
-
   var orderFields = {
-    Company:       [gCompany.id],
-    OrderStatus:   'Submitted',
-    NeedsProof:    false,
-    ProofStatus:   'NotRequired',
-    IsBlindShip:   true,
-    ShippingNote:  'TBD — added to invoice',
-    SubmittedDate: new Date().toISOString().split('T')[0],
-    OrderNotes:    'Submitted by: ' + name + '\n'
-      + 'Email: ' + email + '\n'
-      + 'Phone: ' + phone + '\n'
-      + 'Location: ' + locname + '\n'
-      + 'Ship to: ' + shipAddr
-      + (notes ? '\n\nNotes: ' + notes : '')
+    Company:         [gCompany.id],
+    OrderStatus:     'Submitted',
+    NeedsProof:      false,
+    ProofStatus:     'NotRequired',
+    IsBlindShip:     true,
+    ShippingNote:    'TBD - added to invoice',
+    SubmittedDate:   new Date().toISOString().split('T')[0],
+    SubmitterName:   name,
+    SubmitterEmail:  email,
+    SubmitterPhone:  phone,
+    LocationName:    locname,
+    ShipAddress1:    addr1,
+    ShipAddress2:    addr2,
+    ShipCity:        city,
+    ShipState:       state,
+    ShipZip:         zip,
+    OrderNotes:      notes
   };
 
   apiPost('Orders', orderFields).then(function(order) {
@@ -690,11 +749,23 @@ function doSubmit() {
       });
     });
 
+    if (gFiles.length > 0) {
+      chain = chain.then(function() {
+        var fileChain = Promise.resolve();
+        gFiles.forEach(function(file) {
+          fileChain = fileChain.then(function() {
+            return apiUploadFile(order.id, file);
+          });
+        });
+        return fileChain;
+      });
+    }
+
     return chain.then(function() {
       var num = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
       document.getElementById('ok-msg').textContent =
         'Order #' + num + ' received. Your invoice will include product total, '
-        + 'any applicable setup fees, and actual shipping cost once the order is ready to ship.';
+        + 'any applicable setup fees, and actual shipping cost once your order is ready to ship.';
       show('st-success');
     });
 
@@ -702,7 +773,7 @@ function doSubmit() {
     console.error(e);
     btn.disabled    = false;
     btn.textContent = 'Submit order';
-    alert('Submission failed — please try again or contact us directly.');
+    alert('Submission failed - please try again or contact us directly.');
   });
 }
 
