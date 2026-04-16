@@ -366,7 +366,14 @@ function formatMoney(n) {
 }
 
 function init() {
-  var slug = new URLSearchParams(location.search).get('slug');
+  var host  = location.hostname;
+  var parts = host.split('.');
+  var slug  = null;
+  if (parts.length >= 3) {
+    slug = parts[0];
+  } else {
+    slug = new URLSearchParams(location.search).get('slug');
+  }
   if (!slug) { showErr('Invalid link', 'No order form identifier found. Please check your link.'); return; }
 
   apiGet('Companies', '{OrderFormSlug}="' + slug + '"').then(function(company) {
