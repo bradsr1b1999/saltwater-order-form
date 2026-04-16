@@ -8,136 +8,138 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pri:#1a3c5e;--sec:#00d9e5;--bg:#e8f8fa;--sur:#ffffff;
+  --pri:#1a3c5e;--sec:#00d9e5;--bg:#1a3c5e;--sur:#ffffff;
   --bdr:#cceaed;--txt:#1a1a18;--mut:#4a6066;--lgt:#7a9ca0;
   --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}
 
-.hdr{background:var(--sec);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:80px;flex-wrap:wrap}
-.hdr-left{display:flex;align-items:center;gap:14px}
+.hdr{background:var(--sec);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:84px;flex-wrap:wrap}
+.hdr-left{display:flex;align-items:center;gap:16px}
 #brand-logo{height:56px;width:auto;display:none;object-fit:contain}
 .hdr-name{font-size:20px;font-weight:600;color:var(--pri)}
 .hdr-tag{font-size:14px;color:color-mix(in srgb,var(--pri) 70%,black);margin-top:1px}
 .hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
 .hdr-contact-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:color-mix(in srgb,var(--pri) 60%,black)}
-.hdr-contact-links{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.hdr-contact-links{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
 .hdr-link{font-size:13px;color:var(--pri);text-decoration:none;font-weight:500}
 .hdr-link:hover{text-decoration:underline}
 @media(max-width:520px){.hdr{flex-direction:column;align-items:flex-start}.hdr-right{align-items:flex-start}}
 
-.wrap{max-width:720px;margin:0 auto;padding:24px 18px 40px}
+.wrap{max-width:740px;margin:0 auto;padding:28px 20px 60px}
 
-.card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);padding:26px;margin-bottom:16px}
-.card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:18px}
+.card{background:var(--sur);border:none;border-radius:var(--r);padding:36px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:22px}
 
-.field{margin-bottom:16px}
+.field{margin-bottom:20px}
 .field:last-child{margin-bottom:0}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}
 @media(max-width:520px){.row2{grid-template-columns:1fr}.row3{grid-template-columns:1fr}}
 
-label{display:block;font-size:15px;font-weight:500;color:var(--mut);margin-bottom:6px}
+label{display:block;font-size:15px;font-weight:500;color:var(--mut);margin-bottom:7px}
 .req{color:#e24b4a;margin-left:2px}
 
 input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{
-  width:100%;padding:14px 16px;border:1.5px solid var(--bdr);border-radius:var(--rs);
-  font-family:inherit;font-size:17px;color:var(--txt);background:var(--sur);
+  width:100%;padding:15px 17px;border:1.5px solid #dde8ea;border-radius:var(--rs);
+  font-family:inherit;font-size:17px;color:var(--txt);background:#fff;
   transition:border-color .15s;-webkit-appearance:none;appearance:none
 }
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sec);box-shadow:0 0 0 4px color-mix(in srgb,var(--sec) 15%,transparent)}
-input.err{border-color:#e24b4a}
+input.err{border-color:#e24b4a;box-shadow:0 0 0 3px rgba(226,75,74,.12)}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button{opacity:1}
-textarea{resize:vertical;min-height:90px}
+textarea{resize:vertical;min-height:100px}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6066' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 
-.field-err{font-size:13px;color:#e24b4a;margin-top:5px;display:none}
+.field-err{font-size:13px;color:#e24b4a;margin-top:6px;display:none}
 .field-err.show{display:block}
 
-.sec-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 2px;margin-bottom:12px;margin-top:6px}
+.sec-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.7);padding:0 2px;margin-bottom:14px;margin-top:8px}
 
-.prod-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);margin-bottom:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.prod-card.active{border-color:var(--sec);box-shadow:0 4px 20px color-mix(in srgb,var(--sec) 20%,transparent)}
+.prod-card{background:var(--sur);border:none;border-radius:var(--r);margin-bottom:20px;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.prod-card.active{box-shadow:0 4px 28px rgba(0,0,0,.28),0 0 0 3px var(--sec)}
 
-.prod-imgs{display:flex;width:100%;background:#111;overflow:hidden;height:340px}
-.prod-imgs.single{height:380px}
+.prod-imgs{display:flex;width:100%;background:#111;overflow:hidden;height:360px}
+.prod-imgs.single{height:400px}
 .prod-img-full{flex:1;width:50%;height:100%;object-fit:cover;object-position:center top;display:block;cursor:zoom-in;transition:opacity .15s}
 .prod-img-full:hover{opacity:.88}
 .prod-img-full:not(:last-child){border-right:1px solid rgba(255,255,255,.1)}
-.prod-img-ph{width:100%;height:200px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--lgt);font-size:52px}
+.prod-img-ph{width:100%;height:220px;background:#f0f4f5;display:flex;align-items:center;justify-content:center;color:#aac;font-size:52px}
 
-.prod-hdr{padding:20px 22px 0}
-.prod-name{font-size:20px;font-weight:600;margin-bottom:4px}
+.prod-hdr{padding:26px 28px 0}
+.prod-name{font-size:22px;font-weight:600;margin-bottom:5px}
 .prod-code{font-size:13px;color:var(--mut);font-family:monospace}
-.prod-cat{display:inline-block;font-size:13px;font-weight:500;padding:4px 12px;border-radius:20px;background:color-mix(in srgb,var(--sec) 15%,white);color:var(--pri);margin-top:8px}
-.prod-desc{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.55}
+.prod-cat{display:inline-block;font-size:13px;font-weight:500;padding:4px 14px;border-radius:20px;background:color-mix(in srgb,var(--sec) 15%,white);color:var(--pri);margin-top:10px}
+.prod-desc{font-size:15px;color:var(--mut);margin-top:12px;line-height:1.6}
 
-.prod-body{padding:20px 22px 22px;border-top:1.5px solid var(--bdr);margin-top:18px}
+.prod-body{padding:24px 28px 28px;border-top:1.5px solid #eef2f3;margin-top:20px}
 
-.size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
+.size-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
 @media(max-width:460px){.size-grid{grid-template-columns:repeat(4,1fr)}}
-.sz-cell{display:flex;flex-direction:column;align-items:center;gap:5px}
+.sz-cell{display:flex;flex-direction:column;align-items:center;gap:6px}
 .sz-lbl{font-size:12px;font-weight:600;text-transform:uppercase;color:var(--mut)}
-.sz-inp{width:100%;text-align:center;padding:10px 2px;font-size:17px;font-weight:600;border-radius:var(--rs)}
+.sz-inp{width:100%;text-align:center;padding:11px 2px;font-size:17px;font-weight:600;border-radius:var(--rs)}
 
-.tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
 @media(min-width:480px){.tier-grid{grid-template-columns:repeat(4,1fr)}}
-.tier-opt{border:1.5px solid var(--bdr);border-radius:var(--rs);padding:12px 8px;text-align:center;background:var(--sur);transition:border-color .15s,background .15s}
+.tier-opt{border:1.5px solid #dde8ea;border-radius:var(--rs);padding:14px 10px;text-align:center;background:#fff;transition:border-color .15s,background .15s}
 .tier-opt.active{border-color:var(--sec);background:color-mix(in srgb,var(--sec) 10%,white)}
-.t-qty{font-size:12px;color:var(--mut);margin-bottom:4px}
+.t-qty{font-size:12px;color:var(--mut);margin-bottom:5px}
 .t-price{font-size:20px;font-weight:700}
 .tier-opt.active .t-price{color:var(--pri)}
 .t-each{font-size:12px;color:var(--lgt)}
 
-.tier-warn{background:#fffbeb;border:1.5px solid #e9b84a;border-radius:var(--rs);padding:10px 14px;font-size:15px;color:#7a5a00;margin-top:10px;display:none}
+.tier-warn{background:#fffbeb;border:1.5px solid #e9b84a;border-radius:var(--rs);padding:12px 16px;font-size:15px;color:#7a5a00;margin-top:12px;display:none}
 
-.setup-block{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:14px 16px;margin-bottom:14px}
+.setup-block{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:16px 18px;margin-bottom:16px}
 .setup-line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.setup-label{font-size:15px;font-weight:600;color:var(--pri)}
-.setup-amount{font-size:15px;font-weight:700;color:var(--pri);white-space:nowrap}
-.setup-note-text{font-size:13px;color:var(--mut);margin-top:4px;line-height:1.5}
-.setup-art-note{font-size:12px;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--sec) 20%,white);line-height:1.45}
+.setup-label{font-size:16px;font-weight:600;color:var(--pri)}
+.setup-amount{font-size:16px;font-weight:700;color:var(--pri);white-space:nowrap}
+.setup-note-text{font-size:14px;color:var(--mut);margin-top:5px;line-height:1.5}
+.setup-art-note{font-size:13px;color:var(--mut);margin-top:9px;padding-top:9px;border-top:1px solid color-mix(in srgb,var(--sec) 20%,white);line-height:1.5}
 
-.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:14px;border-top:1.5px solid var(--bdr);margin-top:4px}
-.ptl-lbl{font-size:16px;color:var(--mut)}
-.ptl-val{font-size:22px;font-weight:700}
-.tier-hint{font-size:13px;color:var(--pri);margin-top:4px;text-align:right}
+.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:16px;border-top:1.5px solid #eef2f3;margin-top:6px}
+.ptl-lbl{font-size:17px;color:var(--mut)}
+.ptl-val{font-size:24px;font-weight:700}
+.tier-hint{font-size:14px;color:var(--pri);margin-top:5px;text-align:right}
 .ship-inline{font-size:13px;color:var(--lgt);margin-top:4px;text-align:right}
 
-.special-sec{margin-top:16px;padding-top:16px;border-top:1.5px solid var(--bdr)}
+.special-sec{margin-top:18px;padding-top:18px;border-top:1.5px solid #eef2f3}
 
 .qty-row{display:flex;align-items:center;gap:14px}
-.qty-row input{width:140px}
+.qty-row input{width:150px}
 .qty-note{font-size:16px;color:var(--mut)}
 
-.sum-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:16px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:17px}
 .sum-lbl{color:var(--mut)}
 .sum-val{font-weight:500}
-.sum-divider{border:none;border-top:1.5px solid var(--bdr);margin:10px 0}
-.sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
-.sum-total-lbl{font-size:18px;font-weight:600}
-.sum-total-val{font-size:28px;font-weight:700;color:var(--pri)}
-.invoice-note{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:14px 16px;font-size:15px;color:var(--pri);margin-top:14px;line-height:1.6}
+.sum-divider{border:none;border-top:1.5px solid #eef2f3;margin:12px 0}
+.sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:10px}
+.sum-total-lbl{font-size:19px;font-weight:600}
+.sum-total-val{font-size:30px;font-weight:700;color:var(--pri)}
+.invoice-note{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:16px 18px;font-size:16px;color:var(--pri);margin-top:16px;line-height:1.65}
 
-.submit-btn{width:100%;padding:18px;background:var(--sec);color:var(--pri);border:none;border-radius:var(--r);font-family:inherit;font-size:19px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:8px;letter-spacing:.01em}
+.submit-btn{width:100%;padding:20px;background:var(--sec);color:var(--pri);border:none;border-radius:var(--r);font-family:inherit;font-size:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:10px;letter-spacing:.01em}
 .submit-btn:hover{opacity:.88}
 .submit-btn:active{transform:scale(.99)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-.powered-by{text-align:center;padding:24px 0 40px;display:flex;flex-direction:column;align-items:center;gap:10px}
-#swp-logo{height:32px;width:auto;display:none;object-fit:contain}
-.powered-text{font-size:13px;color:var(--mut)}
-.powered-link{font-size:14px;font-weight:600;color:var(--pri);text-decoration:none}
-.powered-link:hover{text-decoration:underline}
+.powered-by{text-align:center;padding:28px 0 50px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.powered-text{font-size:13px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em}
+.powered-row{display:flex;align-items:center;gap:14px}
+#swp-logo{height:44px;width:auto;display:none;object-fit:contain}
+.powered-link{font-size:16px;font-weight:600;color:rgba(255,255,255,.9);text-decoration:none}
+.powered-link:hover{color:#fff;text-decoration:underline}
 
-.state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
-.spin{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--sec);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:18px}
+.state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px;background:var(--bg)}
+.spin{width:40px;height:40px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--sec);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:18px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ok-icon{width:64px;height:64px;background:#e6fdf2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;color:#1d7a4a}
-.state-title{font-size:24px;font-weight:700;margin-bottom:10px}
-.state-sub{font-size:17px;color:var(--mut);max-width:440px;line-height:1.65}
+.ok-icon{width:68px;height:68px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:22px;color:var(--sec)}
+.state-title{font-size:26px;font-weight:700;margin-bottom:12px;color:#fff}
+.state-sub{font-size:17px;color:rgba(255,255,255,.75);max-width:460px;line-height:1.7}
+.state-art-note{font-size:15px;color:rgba(255,255,255,.55);max-width:420px;line-height:1.6;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}
 
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;flex-direction:column;gap:14px}
 .lightbox img{max-width:100%;max-height:85vh;border-radius:8px;object-fit:contain}
@@ -148,7 +150,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <div id="st-loading" class="state-wrap">
   <div class="spin"></div>
-  <p style="color:var(--mut);font-size:17px">Loading your order form...</p>
+  <p style="color:rgba(255,255,255,.7);font-size:17px">Loading your order form...</p>
 </div>
 
 <div id="st-error" class="state-wrap" style="display:none">
@@ -161,8 +163,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="ok-icon">&#10003;</div>
   <div class="state-title">Order submitted</div>
   <div class="state-sub" id="ok-msg">Your order has been received.</div>
-  <div style="margin-top:20px;font-size:15px;color:var(--mut);max-width:420px;line-height:1.6;text-align:center">
-    Art files for standard products are already on file. For custom items or new artwork, our team will reach out to collect files before production begins.
+  <div class="state-art-note">
+    Art files for standard products are already on file. For custom items or new artwork our team will reach out before production begins.
   </div>
 </div>
 
@@ -176,7 +178,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       </div>
     </div>
     <div class="hdr-right">
-      <div class="hdr-contact-label">Questions? Need help?</div>
+      <div class="hdr-contact-label">Questions or need help?</div>
       <div class="hdr-contact-links">
         <a id="hdr-phone" class="hdr-link" href="#"></a>
         <a id="hdr-email" class="hdr-link" href="#"></a>
@@ -196,16 +198,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         </div>
         <div class="field">
           <label>Email <span class="req">*</span></label>
-          <input type="email" id="f-email" placeholder="john@company.com" autocomplete="email"
-            onblur="validateEmail()">
-          <div class="field-err" id="email-err">Please enter a valid email address</div>
+          <input type="email" id="f-email" placeholder="john@company.com" autocomplete="email" onblur="validateEmail()">
+          <div class="field-err" id="email-err">Please enter a valid email address (eg john@company.com)</div>
         </div>
       </div>
       <div class="row2">
         <div class="field">
           <label>Phone <span class="req">*</span></label>
-          <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel"
-            oninput="formatPhone(this)">
+          <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel" oninput="formatPhone(this)">
         </div>
         <div class="field">
           <label>Location name <span class="req">*</span></label>
@@ -284,7 +284,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
     <div class="powered-by">
       <div class="powered-text">Powered by</div>
-      <a href="https://www.saltwater-promotions.com" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+      <a href="https://www.saltwater-promotions.com" target="_blank" class="powered-row" style="text-decoration:none">
         <img id="swp-logo" alt="Saltwater Promotions">
         <span class="powered-link">Saltwater Promotions</span>
       </a>
@@ -341,8 +341,9 @@ function validateEmail() {
   var el  = document.getElementById('f-email');
   var err = document.getElementById('email-err');
   var val = el.value.trim();
-  var ok  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-  if (val && !ok) {
+  if (!val) { el.classList.remove('err'); err.classList.remove('show'); return true; }
+  var ok = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(val);
+  if (!ok) {
     el.classList.add('err');
     err.classList.add('show');
     return false;
@@ -377,11 +378,12 @@ function init() {
 }
 
 function applyBrand(f) {
-  if (f.BrandPrimaryColor) document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
+  if (f.BrandPrimaryColor) {
+    document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
+    document.documentElement.style.setProperty('--bg',  f.BrandPrimaryColor);
+  }
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
-    var tint = hexToTint(f.BrandSecondaryColor, 0.15);
-    if (tint) document.documentElement.style.setProperty('--bg', tint);
   }
   var logoUrl = f.BrandLogoUrl || f.BrandLogoUrlWhite;
   if (logoUrl) {
@@ -416,39 +418,32 @@ function applyBrand(f) {
   }
 }
 
-function hexToTint(hex, opacity) {
-  hex = hex.replace('#','');
-  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-  if (hex.length !== 6) return null;
-  var r = parseInt(hex.substring(0,2),16);
-  var g = parseInt(hex.substring(2,4),16);
-  var b = parseInt(hex.substring(4,6),16);
-  return 'rgb(' + Math.round(r*opacity+255*(1-opacity)) + ','
-               + Math.round(g*opacity+255*(1-opacity)) + ','
-               + Math.round(b*opacity+255*(1-opacity)) + ')';
-}
-
 function renderProducts() {
   var wrap = document.getElementById('products-wrap');
   gProducts.forEach(function(p) {
     var f = p.fields;
     var tiers = [
-      { min:f.Tier1MinQty, price:f.Tier1Price },
-      { min:f.Tier2MinQty, price:f.Tier2Price },
-      { min:f.Tier3MinQty, price:f.Tier3Price },
-      { min:f.Tier4MinQty, price:f.Tier4Price }
+      { idx:1, min:f.Tier1MinQty, price:f.Tier1Price },
+      { idx:2, min:f.Tier2MinQty, price:f.Tier2Price },
+      { idx:3, min:f.Tier3MinQty, price:f.Tier3Price },
+      { idx:4, min:f.Tier4MinQty, price:f.Tier4Price }
     ].filter(function(t) { return t.min && t.price; });
-    var defaultQty = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].min : 0;
+    var defaultQty  = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].min : 0;
+    var defaultPrice = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].price : (f.UnitPrice || 0);
+    var defaultTier  = (f.InputType === 'QtyTiered' && tiers.length && defaultQty > 0)
+      ? ('Tier 1 - ' + tiers[0].min + '+ pcs @ $' + tiers[0].price.toFixed(2)) : '';
     gItems[p.id] = {
-      singleQty: defaultQty, sizes: {},
-      unitPrice:   defaultQty > 0 ? tiers[0].price : (f.UnitPrice || 0),
-      setupFee:    f.SetupFee  || 0,
-      tierApplied: defaultQty > 0 ? ('Tier 1 - ' + tiers[0].min + '+ pcs @ $' + tiers[0].price.toFixed(2)) : '',
+      singleQty:   defaultQty,
+      sizes:       {},
+      unitPrice:   defaultPrice,
+      setupFee:    f.SetupFee || 0,
+      tierApplied: defaultTier,
       tierMinQty:  defaultQty > 0 ? tiers[0].min : 0,
       specialNote: ''
     };
     wrap.appendChild(makeProductCard(p));
   });
+  updateSummary();
 }
 
 function makeProductCard(p) {
@@ -460,7 +455,6 @@ function makeProductCard(p) {
   var imgs = (f.ProductImages || []).filter(function(i) {
     return i.url && i.type && i.type.indexOf('image') === 0;
   });
-
   var imgHtml = '';
   if (imgs.length >= 2) {
     imgHtml = '<div class="prod-imgs">'
@@ -468,9 +462,7 @@ function makeProductCard(p) {
       + '<img class="prod-img-full" src="' + imgs[1].url + '" loading="lazy" title="Click to enlarge" onclick="openImg(\'' + imgs[1].url + '\',\'Back\')">'
       + '</div>';
   } else if (imgs.length === 1) {
-    imgHtml = '<div class="prod-imgs single">'
-      + '<img class="prod-img-full" src="' + imgs[0].url + '" loading="lazy" onclick="openImg(\'' + imgs[0].url + '\',\'\')">'
-      + '</div>';
+    imgHtml = '<div class="prod-imgs single"><img class="prod-img-full" src="' + imgs[0].url + '" loading="lazy" onclick="openImg(\'' + imgs[0].url + '\',\'\')"></div>';
   } else {
     imgHtml = '<div class="prod-img-ph">&#9635;</div>';
   }
@@ -478,12 +470,10 @@ function makeProductCard(p) {
   var setupHtml = '';
   if (f.SetupFee && f.SetupFee > 0) {
     setupHtml = '<div class="setup-block">'
-      + '<div class="setup-line">'
-      + '<span class="setup-label">Setup fee</span>'
-      + '<span class="setup-amount">$' + f.SetupFee.toFixed(2) + ' per design</span>'
-      + '</div>'
+      + '<div class="setup-line"><span class="setup-label">Setup fee</span>'
+      + '<span class="setup-amount">$' + f.SetupFee.toFixed(2) + ' per design</span></div>'
       + (f.SetupFeeNote ? '<div class="setup-note-text">' + f.SetupFeeNote + '</div>' : '')
-      + '<div class="setup-art-note">Additional setup fees may apply based on the number of art changes or design variations. Please note design details in special instructions below.</div>'
+      + '<div class="setup-art-note">Additional setup fees may apply based on the number of art changes or design variations. Note design details in special instructions below.</div>'
       + '</div>';
   }
 
@@ -491,9 +481,8 @@ function makeProductCard(p) {
                 : f.InputType === 'QtyTiered'  ? makeTierInput(p)
                 : makeSingleQty(p);
 
-  var item = gItems[p.id];
+  var item     = gItems[p.id];
   var initLine = (item.singleQty * item.unitPrice + (item.singleQty > 0 ? item.setupFee : 0)).toFixed(2);
-  var initTier = item.tierApplied || '';
 
   div.innerHTML = imgHtml
     + '<div class="prod-hdr">'
@@ -505,11 +494,10 @@ function makeProductCard(p) {
     + '<div class="prod-body">'
     + inputHtml
     + setupHtml
-    + '<div class="prod-total-row">'
-    + '<span class="ptl-lbl">Line total</span>'
+    + '<div class="prod-total-row"><span class="ptl-lbl">Line total</span>'
     + '<div style="text-align:right">'
     + '<div class="ptl-val" id="ptv-' + p.id + '">$' + initLine + '</div>'
-    + '<div class="tier-hint" id="pth-' + p.id + '">' + initTier + '</div>'
+    + '<div class="tier-hint" id="pth-' + p.id + '">' + (item.tierApplied || '') + '</div>'
     + '<div class="ship-inline">+ shipping added to invoice</div>'
     + '</div></div>'
     + '<div class="special-sec"><div class="field">'
@@ -517,8 +505,7 @@ function makeProductCard(p) {
     + '<input type="text" id="ic-' + p.id + '" '
     + 'placeholder="eg 2 designs: logo A front, logo B back — setup fee applies per design" '
     + 'oninput="gItems[\'' + p.id + '\'].specialNote=this.value">'
-    + '</div></div>'
-    + '</div>';
+    + '</div></div></div>';
 
   if (item.singleQty > 0) div.classList.add('active');
   return div;
@@ -527,16 +514,12 @@ function makeProductCard(p) {
 function makeSizeMatrix(p) {
   var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
   var cells = sizes.map(function(s) {
-    return '<div class="sz-cell">'
-      + '<div class="sz-lbl">' + s + '</div>'
-      + '<input type="number" class="sz-inp" min="0" value="0" '
-      + 'data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')">'
-      + '</div>';
+    return '<div class="sz-cell"><div class="sz-lbl">' + s + '</div>'
+      + '<input type="number" class="sz-inp" min="0" value="0" data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')"></div>';
   }).join('');
-  return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">'
-    + 'Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
+  return '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
     + '<div class="size-grid">' + cells + '</div>'
-    + '<div style="font-size:16px;color:var(--mut);margin-top:6px;margin-bottom:14px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
+    + '<div style="font-size:17px;color:var(--mut);margin-top:8px;margin-bottom:16px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
 }
 
 function makeTierInput(p) {
@@ -547,7 +530,7 @@ function makeTierInput(p) {
     { idx:3, min:f.Tier3MinQty, next:f.Tier4MinQty, price:f.Tier3Price },
     { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
   ].filter(function(t) { return t.min && t.price; });
-  var minQty = tiers.length ? tiers[0].min : 0;
+  var minQty     = tiers.length ? tiers[0].min : 0;
   var defaultQty = gItems[p.id].singleQty || minQty;
   var activeTier = floorTier(f, defaultQty);
 
@@ -560,36 +543,31 @@ function makeTierInput(p) {
       + '<div class="t-each">each</div></div>';
   }).join('');
 
-  return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">Select quantity &mdash; price tier applies automatically</div>'
+  return '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">Select quantity &mdash; price tier applies automatically</div>'
     + '<div class="tier-grid">' + cards + '</div>'
     + '<div class="field"><label>Quantity</label>'
     + '<div class="qty-row">'
     + '<input type="number" id="qi-' + p.id + '" min="0" value="' + defaultQty + '" oninput="onTier(\'' + p.id + '\')">'
     + '<span class="qty-note" id="qn-' + p.id + '">' + (activeTier ? '$' + activeTier.price.toFixed(2) + ' each' : '') + '</span>'
     + '</div>'
-    + '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet minimum order requirements of ' + minQty + ' pcs before your order is confirmed.</div>'
+    + '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet the minimum order requirement of ' + minQty + ' pcs before your order is confirmed.</div>'
     + '</div>';
 }
 
 function makeSingleQty(p) {
-  return '<div class="field" style="margin-bottom:14px">'
-    + '<label>Quantity &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</label>'
-    + '<div class="qty-row">'
-    + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')">'
-    + '</div></div>';
+  return '<div class="field" style="margin-bottom:16px"><label>Quantity &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</label>'
+    + '<div class="qty-row"><input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')"></div></div>';
 }
 
 function onSize(pid) {
   var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
-  var total = 0;
-  var smap  = {};
+  var total = 0; var smap = {};
   sizes.forEach(function(s) {
     var el = document.querySelector('[data-pid="' + pid + '"][data-sz="' + s + '"]');
     var v  = el ? (parseInt(el.value) || 0) : 0;
     smap[s] = v; total += v;
   });
-  gItems[pid].sizes     = smap;
-  gItems[pid].singleQty = total;
+  gItems[pid].sizes = smap; gItems[pid].singleQty = total;
   gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
   var el = document.getElementById('st-' + pid);
   if (el) el.textContent = total;
@@ -597,8 +575,7 @@ function onSize(pid) {
 }
 
 function onTier(pid) {
-  var p   = findProduct(pid);
-  var f   = p.fields;
+  var p   = findProduct(pid); var f = p.fields;
   var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
   var t   = floorTier(f, qty);
   var tiers = [
@@ -616,9 +593,8 @@ function onTier(pid) {
   var qn   = document.getElementById('qn-' + pid);
   if (qty > 0 && qty < minQty) {
     if (warn) warn.style.display = 'block';
-    gItems[pid].unitPrice   = tiers.length ? tiers[0].price : 0;
-    gItems[pid].tierApplied = '';
-    gItems[pid].tierMinQty  = 0;
+    gItems[pid].unitPrice = tiers.length ? tiers[0].price : 0;
+    gItems[pid].tierApplied = ''; gItems[pid].tierMinQty = 0;
     if (qn) qn.textContent = '';
   } else {
     if (warn) warn.style.display = 'none';
@@ -630,9 +606,7 @@ function onTier(pid) {
       gItems[pid].tierMinQty  = t.min;
       if (qn) qn.textContent = '$' + t.price.toFixed(2) + ' each';
     } else {
-      gItems[pid].unitPrice   = 0;
-      gItems[pid].tierApplied = '';
-      gItems[pid].tierMinQty  = 0;
+      gItems[pid].unitPrice = 0; gItems[pid].tierApplied = ''; gItems[pid].tierMinQty = 0;
       if (qn) qn.textContent = '';
     }
   }
@@ -665,9 +639,8 @@ function floorTier(f, qty) {
 }
 
 function recalc(pid) {
-  var item  = gItems[pid];
-  var qty   = item.singleQty || 0;
-  var price = item.unitPrice  || 0;
+  var item = gItems[pid]; var qty = item.singleQty || 0;
+  var price = item.unitPrice || 0;
   var setup = qty > 0 ? (item.setupFee || 0) : 0;
   var line  = qty * price + setup;
   var pv = document.getElementById('ptv-' + pid);
@@ -680,16 +653,13 @@ function recalc(pid) {
 }
 
 function updateSummary() {
-  var grand = 0;
-  var rows  = [];
+  var grand = 0; var rows = [];
   gProducts.forEach(function(p) {
-    var item = gItems[p.id];
-    var qty  = item.singleQty || 0;
+    var item = gItems[p.id]; var qty = item.singleQty || 0;
     if (!qty) return;
     var line = qty * (item.unitPrice || 0) + (item.setupFee || 0);
     grand += line;
-    rows.push('<div class="sum-row">'
-      + '<span class="sum-lbl">' + (p.fields.ProductName || '') + ' x ' + qty + '</span>'
+    rows.push('<div class="sum-row"><span class="sum-lbl">' + (p.fields.ProductName || '') + ' x ' + qty + '</span>'
       + '<span class="sum-val">$' + line.toFixed(2) + '</span></div>');
   });
   document.getElementById('sum-lines').innerHTML = rows.length
@@ -719,22 +689,21 @@ function doSubmit() {
   var zip     = document.getElementById('f-zip').value.trim();
   var notes   = document.getElementById('f-notes').value.trim();
 
-  if (!name)              { alert('Please enter your name.');             return; }
-  if (!email)             { alert('Please enter your email address.');    return; }
-  if (!validateEmail())   { alert('Please enter a valid email address.'); return; }
-  if (!phone)             { alert('Please enter your phone number.');     return; }
-  if (!locname)           { alert('Please enter your location name.');    return; }
-  if (!addr1)             { alert('Please enter a ship-to address.');     return; }
-  if (!city)              { alert('Please enter a city.');                return; }
-  if (!state)             { alert('Please select a state.');              return; }
-  if (!zip)               { alert('Please enter a zip code.');            return; }
+  if (!name)            { alert('Please enter your name.');              return; }
+  if (!email)           { alert('Please enter your email address.');     return; }
+  if (!validateEmail()) { alert('Please enter a valid email address.');  return; }
+  if (!phone)           { alert('Please enter your phone number.');      return; }
+  if (!locname)         { alert('Please enter your location name.');     return; }
+  if (!addr1)           { alert('Please enter a ship-to address.');      return; }
+  if (!city)            { alert('Please enter a city.');                 return; }
+  if (!state)           { alert('Please select a state.');               return; }
+  if (!zip)             { alert('Please enter a zip code.');             return; }
 
   var active = gProducts.filter(function(p) { return (gItems[p.id].singleQty || 0) > 0; });
   if (!active.length) { alert('Please add at least one item before submitting.'); return; }
 
   var btn = document.getElementById('submit-btn');
-  btn.disabled    = true;
-  btn.textContent = 'Submitting...';
+  btn.disabled = true; btn.textContent = 'Submitting...';
 
   var orderFields = {
     Company:        [gCompany.id],
@@ -758,27 +727,23 @@ function doSubmit() {
 
   apiPost('Orders', orderFields).then(function(order) {
     if (!order.id) throw new Error('Order record not created');
-
     var chain = Promise.resolve();
     active.forEach(function(p) {
       chain = chain.then(function() {
-        var item = gItems[p.id];
-        var sz   = item.sizes || {};
+        var item = gItems[p.id]; var sz = item.sizes || {};
         var lf = {
-          Order:         [order.id],
-          Product:       [p.id],
-          UnitSellPrice: item.unitPrice   || 0,
-          SetupFee:      item.setupFee    || 0,
+          Order: [order.id], Product: [p.id],
+          UnitSellPrice: item.unitPrice || 0,
+          SetupFee:      item.setupFee  || 0,
           TierApplied:   item.tierApplied || '',
           TierMinQty:    item.tierMinQty  || 0,
           Notes:         item.specialNote || ''
         };
         if (p.fields.InputType === 'SizeMatrix') {
-          lf.QtyXS=sz['XS']||0; lf.QtyS=sz['S']||0;   lf.QtyM=sz['M']||0;
-          lf.QtyL=sz['L']||0;   lf.QtyXL=sz['XL']||0; lf.Qty2XL=sz['2XL']||0;
+          lf.QtyXS=sz['XS']||0; lf.QtyS=sz['S']||0; lf.QtyM=sz['M']||0;
+          lf.QtyL=sz['L']||0; lf.QtyXL=sz['XL']||0; lf.Qty2XL=sz['2XL']||0;
           lf.Qty3XL=sz['3XL']||0; lf.Qty4XL=sz['4XL']||0;
-          lf.Qty5XL=sz['5XL']||0; lf.Qty6XL=sz['6XL']||0;
-          lf.SingleQty=0;
+          lf.Qty5XL=sz['5XL']||0; lf.Qty6XL=sz['6XL']||0; lf.SingleQty=0;
         } else {
           lf.QtyXS=0;lf.QtyS=0;lf.QtyM=0;lf.QtyL=0;lf.QtyXL=0;
           lf.Qty2XL=0;lf.Qty3XL=0;lf.Qty4XL=0;lf.Qty5XL=0;lf.Qty6XL=0;
@@ -787,7 +752,6 @@ function doSubmit() {
         return apiPost('OrderLineItems', lf);
       });
     });
-
     return chain.then(function() {
       var num = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
       document.getElementById('ok-msg').textContent =
@@ -795,11 +759,9 @@ function doSubmit() {
         + ' for payment. Your order will be confirmed and submitted to production once payment is received.';
       show('st-success');
     });
-
   }).catch(function(e) {
     console.error(e);
-    btn.disabled    = false;
-    btn.textContent = 'Submit order';
+    btn.disabled = false; btn.textContent = 'Submit order';
     alert('Submission failed - please try again or contact us directly.');
   });
 }
