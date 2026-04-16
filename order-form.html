@@ -491,23 +491,13 @@ function renderProducts() {
   var wrap = document.getElementById('products-wrap');
   gProducts.forEach(function(p) {
     var f = p.fields;
-    var tiers = [
-      { idx:1, min:f.Tier1MinQty, price:f.Tier1Price },
-      { idx:2, min:f.Tier2MinQty, price:f.Tier2Price },
-      { idx:3, min:f.Tier3MinQty, price:f.Tier3Price },
-      { idx:4, min:f.Tier4MinQty, price:f.Tier4Price }
-    ].filter(function(t) { return t.min && t.price; });
-    var defaultQty  = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].min : 0;
-    var defaultPrice = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].price : (f.UnitPrice || 0);
-    var defaultTier  = (f.InputType === 'QtyTiered' && tiers.length && defaultQty > 0)
-      ? ('Tier 1 - ' + tiers[0].min + '+ pcs @ $' + tiers[0].price.toFixed(2)) : '';
     gItems[p.id] = {
-      singleQty:   defaultQty,
+      singleQty:   0,
       sizes:       {},
-      unitPrice:   defaultPrice,
-      setupFee:    f.SetupFee || 0,
-      tierApplied: defaultTier,
-      tierMinQty:  defaultQty > 0 ? tiers[0].min : 0,
+      unitPrice:   f.UnitPrice || 0,
+      setupFee:    f.SetupFee  || 0,
+      tierApplied: '',
+      tierMinQty:  0,
       specialNote: ''
     };
     wrap.appendChild(makeProductCard(p));
@@ -565,8 +555,8 @@ function makeProductCard(p) {
     + setupHtml
     + '<div class="prod-total-row"><span class="ptl-lbl">Line total</span>'
     + '<div style="text-align:right">'
-    + '<div class="ptl-val" id="ptv-' + p.id + '">' + initLine + '</div>'
-    + '<div class="tier-hint" id="pth-' + p.id + '">' + (item.tierApplied || '') + '</div>'
+    + '<div class="ptl-val" id="ptv-' + p.id + '">$0.00</div>'
+    + '<div class="tier-hint" id="pth-' + p.id + '"></div>'
     + '<div class="ship-inline">+ shipping added to invoice</div>'
     + '</div></div>'
     + '<div class="special-sec"><div class="field">'
@@ -576,7 +566,6 @@ function makeProductCard(p) {
     + 'oninput="gItems[\'' + p.id + '\'].specialNote=this.value">'
     + '</div></div></div>';
 
-  if (item.singleQty > 0) div.classList.add('active');
   return div;
 }
 
@@ -599,14 +588,11 @@ function makeTierInput(p) {
     { idx:3, min:f.Tier3MinQty, next:f.Tier4MinQty, price:f.Tier3Price },
     { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
   ].filter(function(t) { return t.min && t.price; });
-  var minQty     = tiers.length ? tiers[0].min : 0;
-  var defaultQty = gItems[p.id].singleQty || minQty;
-  var activeTier = floorTier(f, defaultQty);
+  var minQty = tiers.length ? tiers[0].min : 0;
 
   var cards = tiers.map(function(t) {
     var lbl = t.next ? (t.min + '&ndash;' + (t.next-1) + ' pcs') : (t.min + '+ pcs');
-    var isActive = activeTier && activeTier.idx === t.idx;
-    return '<div class="tier-opt' + (isActive ? ' active' : '') + '" id="to-' + p.id + '-' + t.idx + '">'
+    return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
       + '<div class="t-qty">' + lbl + '</div>'
       + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
       + '<div class="t-each">each</div></div>';
@@ -616,13 +602,12 @@ function makeTierInput(p) {
     + '<div class="tier-grid">' + cards + '</div>'
     + '<div class="field"><label>Quantity</label>'
     + '<div class="qty-row">'
-    + '<input type="number" id="qi-' + p.id + '" min="0" value="' + defaultQty + '" oninput="onTier(\'' + p.id + '\')">'
-    + '<span class="qty-note" id="qn-' + p.id + '">' + (activeTier ? '$' + activeTier.price.toFixed(2) + ' each' : '') + '</span>'
+    + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onTier(\'' + p.id + '\')">'
+    + '<span class="qty-note" id="qn-' + p.id + '"></span>'
     + '</div>'
     + '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet the minimum order requirement of ' + minQty + ' pcs before your order is confirmed.</div>'
     + '</div>';
 }
-
 function makeSingleQty(p) {
   return '<div class="field" style="margin-bottom:16px"><label>Quantity &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</label>'
     + '<div class="qty-row"><input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')"></div></div>';
