@@ -157,6 +157,15 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .contact-bottom-links{display:flex;flex-direction:column;align-items:center;gap:10px}
 .contact-bottom-link{font-size:17px;color:var(--pri);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:8px}
 .contact-bottom-link:hover{text-decoration:underline}
+
+.skeleton{background:linear-gradient(90deg,#e8edf0 25%,#d0d8dd 50%,#e8edf0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.skel-img{height:220px;border-radius:10px 10px 0 0;margin:-28px -28px 20px}
+.skel-line{height:16px;margin-bottom:10px}
+.skel-line.wide{width:70%}
+.skel-line.med{width:45%}
+.skel-line.short{width:25%}
 </style>
 </head>
 <body>
@@ -327,11 +336,60 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
 </div>
 
+
+<div id="skeleton-ui" style="display:none;max-width:740px;margin:0 auto;padding:28px 20px 60px">
+  <div class="skel-card">
+    <div class="skeleton skel-line wide"></div>
+    <div class="skeleton skel-line med" style="margin-top:8px"></div>
+    <div class="skeleton skel-line short" style="margin-top:8px"></div>
+  </div>
+  <div class="skel-card">
+    <div class="skeleton skel-img"></div>
+    <div class="skeleton skel-line wide"></div>
+    <div class="skeleton skel-line med"></div>
+    <div class="skeleton skel-line short"></div>
+  </div>
+  <div class="skel-card">
+    <div class="skeleton skel-img"></div>
+    <div class="skeleton skel-line wide"></div>
+    <div class="skeleton skel-line med"></div>
+    <div class="skeleton skel-line short"></div>
+  </div>
+</div>
 <script>
 var PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtable';
 var gCompany  = null;
 var gProducts = [];
 var gItems    = {};
+
+
+var CACHE_KEY_PREFIX = 'swp_form_';
+var CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+function cacheSet(key, data) {
+  try {
+    sessionStorage.setItem(CACHE_KEY_PREFIX + key, JSON.stringify({
+      ts: Date.now(), data: data
+    }));
+  } catch(e) {}
+}
+
+function cacheGet(key) {
+  try {
+    var raw = sessionStorage.getItem(CACHE_KEY_PREFIX + key);
+    if (!raw) return null;
+    var obj = JSON.parse(raw);
+    if (Date.now() - obj.ts > CACHE_TTL) {
+      sessionStorage.removeItem(CACHE_KEY_PREFIX + key);
+      return null;
+    }
+    return obj.data;
+  } catch(e) { return null; }
+}
+
+function cacheClear(key) {
+  try { sessionStorage.removeItem(CACHE_KEY_PREFIX + key); } catch(e) {}
+}
 
 function apiCall(path, method, body) {
   return fetch(PROXY, {
@@ -403,9 +461,30 @@ function init() {
   }
   if (!slug) { showErr('Invalid link', 'No order form identifier found. Please check your link.'); return; }
 
+  var cacheKey = 'form_' + slug;
+  var cached   = cacheGet(cacheKey);
+
+  if (cached) {
+    gCompany  = cached.company;
+    gProducts = cached.products;
+    applyBrand(gCompany.fields);
+    renderProducts();
+    show('st-form');
+    return;
+  }
+
+  document.getElementById('st-loading').style.display = 'none';
+  document.getElementById('skeleton-ui').style.display = 'block';
+
   apiGet('Companies', '{OrderFormSlug}="' + slug + '"').then(function(company) {
-    if (!company) { showErr('Form not found', 'No order form found for this link.'); return; }
-    if (!company.fields.OrderFormIsActive) { showErr('Form unavailable', 'This order form is not currently active. Please contact us.'); return; }
+    if (!company) {
+      document.getElementById('skeleton-ui').style.display = 'none';
+      showErr('Form not found', 'No order form found for this link.'); return;
+    }
+    if (!company.fields.OrderFormIsActive) {
+      document.getElementById('skeleton-ui').style.display = 'none';
+      showErr('Form unavailable', 'This order form is not currently active. Please contact us.'); return;
+    }
 
     gCompany = company;
     applyBrand(company.fields);
@@ -413,12 +492,18 @@ function init() {
     var productIds = company.fields['Products'] || [];
     return apiGetByIds('Products', productIds).then(function(prods) {
       gProducts = prods;
-      if (!gProducts.length) { showErr('No products', 'No products are available for your account right now.'); return; }
+      if (!gProducts.length) {
+        document.getElementById('skeleton-ui').style.display = 'none';
+        showErr('No products', 'No products are available for your account right now.'); return;
+      }
+      cacheSet(cacheKey, { company: company, products: prods });
+      document.getElementById('skeleton-ui').style.display = 'none';
       renderProducts();
       show('st-form');
     });
   }).catch(function(e) {
     console.error('Init error:', e);
+    document.getElementById('skeleton-ui').style.display = 'none';
     showErr('Connection error', 'Unable to load the form. Please try again or contact us directly.');
   });
 }
