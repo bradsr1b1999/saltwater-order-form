@@ -126,7 +126,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .submit-btn:active{transform:scale(.99)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-.powered-by{text-align:center;padding:28px 0 50px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.powered-by{text-align:center;padding:28px 0 50px;display:flex;justify-content:center;align-items:center}
 .powered-text{font-size:13px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em}
 .powered-row{display:flex;align-items:center;gap:14px}
 #swp-logo{height:132px;width:auto;display:none;object-fit:contain}
@@ -144,6 +144,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;flex-direction:column;gap:14px}
 .lightbox img{max-width:100%;max-height:85vh;border-radius:8px;object-fit:contain}
 .lightbox-cap{color:rgba(255,255,255,.55);font-size:14px}
+
+.hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden;pointer-events:none;tab-index:-1}
 </style>
 </head>
 <body>
@@ -191,6 +193,12 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
     <div class="card">
       <div class="card-title">Your information</div>
+      <div class="hp-field" aria-hidden="true">
+        <label>Leave this field empty</label>
+        <input type="text" id="hp-name" name="hp-name" autocomplete="off" tabindex="-1">
+        <input type="email" id="hp-email" name="hp-email" autocomplete="off" tabindex="-1">
+      </div>
+
       <div class="row2">
         <div class="field">
           <label>First &amp; last name <span class="req">*</span></label>
@@ -283,10 +291,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <button class="submit-btn" id="submit-btn" onclick="doSubmit()">Submit order</button>
 
     <div class="powered-by">
-      <div class="powered-text">Powered by</div>
-      <a href="https://www.saltwater-promotions.com" target="_blank" class="powered-row" style="text-decoration:none;gap:20px;align-items:center">
-        <img id="swp-logo" alt="Saltwater Promotions">
-        <span class="powered-link" style="font-size:22px">Saltwater Promotions</span>
+      <a href="https://www.saltwater-promotions.com" target="_blank" style="text-decoration:none;display:flex;justify-content:center">
+        <img id="swp-logo" alt="Saltwater Promotions" title="Powered by Saltwater Promotions">
       </a>
     </div>
 
@@ -351,6 +357,11 @@ function validateEmail() {
   el.classList.remove('err');
   err.classList.remove('show');
   return true;
+}
+
+
+function formatMoney(n) {
+  return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 function init() {
@@ -482,7 +493,7 @@ function makeProductCard(p) {
                 : makeSingleQty(p);
 
   var item     = gItems[p.id];
-  var initLine = (item.singleQty * item.unitPrice + (item.singleQty > 0 ? item.setupFee : 0)).toFixed(2);
+  var initLine = formatMoney(item.singleQty * item.unitPrice + (item.singleQty > 0 ? item.setupFee : 0));
 
   div.innerHTML = imgHtml
     + '<div class="prod-hdr">'
@@ -496,7 +507,7 @@ function makeProductCard(p) {
     + setupHtml
     + '<div class="prod-total-row"><span class="ptl-lbl">Line total</span>'
     + '<div style="text-align:right">'
-    + '<div class="ptl-val" id="ptv-' + p.id + '">$' + initLine + '</div>'
+    + '<div class="ptl-val" id="ptv-' + p.id + '">' + initLine + '</div>'
     + '<div class="tier-hint" id="pth-' + p.id + '">' + (item.tierApplied || '') + '</div>'
     + '<div class="ship-inline">+ shipping added to invoice</div>'
     + '</div></div>'
@@ -645,7 +656,7 @@ function recalc(pid) {
   var line  = qty * price + setup;
   var pv = document.getElementById('ptv-' + pid);
   var ph = document.getElementById('pth-' + pid);
-  if (pv) pv.textContent = '$' + line.toFixed(2);
+  if (pv) pv.textContent = formatMoney(line);
   if (ph) ph.textContent = item.tierApplied || '';
   var pc = document.getElementById('pc-' + pid);
   if (pc) { if (qty > 0) pc.classList.add('active'); else pc.classList.remove('active'); }
@@ -660,12 +671,12 @@ function updateSummary() {
     var line = qty * (item.unitPrice || 0) + (item.setupFee || 0);
     grand += line;
     rows.push('<div class="sum-row"><span class="sum-lbl">' + (p.fields.ProductName || '') + ' x ' + qty + '</span>'
-      + '<span class="sum-val">$' + line.toFixed(2) + '</span></div>');
+      + '<span class="sum-val">' + formatMoney(line) + '</span></div>');
   });
   document.getElementById('sum-lines').innerHTML = rows.length
     ? rows.join('')
     : '<div style="font-size:16px;color:var(--lgt);padding:4px 0">No items added yet</div>';
-  document.getElementById('sum-total').textContent = '$' + grand.toFixed(2);
+  document.getElementById('sum-total').textContent = formatMoney(grand);
 }
 
 function openImg(url, caption) {
@@ -678,6 +689,11 @@ function openImg(url, caption) {
 }
 
 function doSubmit() {
+
+  var hp1 = document.getElementById('hp-name').value;
+  var hp2 = document.getElementById('hp-email').value;
+  if (hp1 || hp2) { return; }
+
   var name    = document.getElementById('f-name').value.trim();
   var email   = document.getElementById('f-email').value.trim();
   var phone   = document.getElementById('f-phone').value.trim();
