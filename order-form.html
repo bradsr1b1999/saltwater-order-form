@@ -146,6 +146,17 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .lightbox-cap{color:rgba(255,255,255,.55);font-size:14px}
 
 .hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden;pointer-events:none;tab-index:-1}
+
+.contact-bar{background:#fff;border-bottom:1px solid #dde8ea;padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;position:sticky;top:64px;z-index:9}
+.contact-bar a{font-size:13px;color:var(--pri);text-decoration:none;font-weight:500;white-space:nowrap}
+.contact-bar a:hover{text-decoration:underline}
+.contact-bar-sep{font-size:13px;color:var(--lgt)}
+@media(min-width:521px){.contact-bar{display:none}}
+.contact-bottom{background:#fff;border-radius:var(--r);padding:24px 28px;margin-bottom:16px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.contact-bottom-title{font-size:15px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.contact-bottom-links{display:flex;flex-direction:column;align-items:center;gap:10px}
+.contact-bottom-link{font-size:17px;color:var(--pri);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:8px}
+.contact-bottom-link:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -189,6 +200,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     </div>
   </div>
 
+
+  <div class="contact-bar" id="contact-bar">
+    <a id="cb-phone" href="#">&#9742; <span id="cb-phone-txt"></span></a>
+    <span class="contact-bar-sep">|</span>
+    <a id="cb-email" href="#">&#9993; <span id="cb-email-txt"></span></a>
+    <span class="contact-bar-sep">|</span>
+    <a id="cb-website" href="https://www.saltwater-promotions.com" target="_blank">saltwater-promotions.com</a>
+  </div>
   <div class="wrap">
 
     <div class="card">
@@ -285,6 +304,16 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="card-title">Order notes</div>
       <div class="field">
         <textarea id="f-notes" placeholder="Special instructions, delivery notes, questions..."></textarea>
+      </div>
+    </div>
+
+
+    <div class="contact-bottom">
+      <div class="contact-bottom-title">Need help with your order?</div>
+      <div class="contact-bottom-links">
+        <a id="bot-phone" class="contact-bottom-link" href="#">&#9742; <span id="bot-phone-txt"></span></a>
+        <a id="bot-email" class="contact-bottom-link" href="#">&#9993; <span id="bot-email-txt"></span></a>
+        <a id="bot-website" class="contact-bottom-link" href="https://www.saltwater-promotions.com" target="_blank">&#127760; saltwater-promotions.com</a>
       </div>
     </div>
 
@@ -416,18 +445,41 @@ function applyBrand(f) {
   document.title = 'Order — ' + (f.CompanyName || '');
 
   if (f.SWPPhone) {
+    var phoneNum = f.SWPPhone;
+    var phoneHref = 'tel:' + phoneNum.replace(/\D/g,'');
     var ph = document.getElementById('hdr-phone');
-    ph.textContent = f.SWPPhone;
-    ph.href = 'tel:' + f.SWPPhone.replace(/\D/g,'');
+    ph.textContent = phoneNum; ph.href = phoneHref;
+    var cbp = document.getElementById('cb-phone');
+    var cbpt = document.getElementById('cb-phone-txt');
+    if (cbp) cbp.href = phoneHref;
+    if (cbpt) cbpt.textContent = phoneNum;
+    var bp = document.getElementById('bot-phone');
+    var bpt = document.getElementById('bot-phone-txt');
+    if (bp) bp.href = phoneHref;
+    if (bpt) bpt.textContent = phoneNum;
   }
   if (f.SWPEmail) {
+    var emailAddr = f.SWPEmail;
+    var emailHref = 'mailto:' + emailAddr;
     var em = document.getElementById('hdr-email');
-    em.textContent = f.SWPEmail;
-    em.href = 'mailto:' + f.SWPEmail;
+    em.textContent = emailAddr; em.href = emailHref;
+    var cbe = document.getElementById('cb-email');
+    var cbet = document.getElementById('cb-email-txt');
+    if (cbe) cbe.href = emailHref;
+    if (cbet) cbet.textContent = emailAddr;
+    var be = document.getElementById('bot-email');
+    var bet = document.getElementById('bot-email-txt');
+    if (be) be.href = emailHref;
+    if (bet) bet.textContent = emailAddr;
   }
   if (f.SWPWebsite) {
+    var siteUrl = f.SWPWebsite.indexOf('http') === 0 ? f.SWPWebsite : 'https://' + f.SWPWebsite;
     var wb = document.getElementById('hdr-website');
-    wb.href = f.SWPWebsite.indexOf('http') === 0 ? f.SWPWebsite : 'https://' + f.SWPWebsite;
+    if (wb) wb.href = siteUrl;
+    var cbw = document.getElementById('cb-website');
+    if (cbw) cbw.href = siteUrl;
+    var bw = document.getElementById('bot-website');
+    if (bw) bw.href = siteUrl;
   }
   if (f.SWPLogoUrl) {
     var sl = document.getElementById('swp-logo');
