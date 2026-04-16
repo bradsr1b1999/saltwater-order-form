@@ -8,19 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pri:#1a3c5e;--sec:#00d9e5;--bg:#aaeef3;--sur:#ffffff;
-  --bdr:#d0eef0;--txt:#1a1a18;--mut:#4a6066;--lgt:#7a9ca0;
+  --pri:#1a3c5e;--sec:#00d9e5;--bg:#e8f8fa;--sur:#ffffff;
+  --bdr:#cceaed;--txt:#1a1a18;--mut:#4a6066;--lgt:#7a9ca0;
   --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}
 
-.hdr{background:var(--pri);padding:20px 24px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;min-height:88px}
-#brand-logo{height:72px;width:auto;display:none;object-fit:contain}
-.hdr-name{font-size:22px;font-weight:600;color:white}
-.hdr-tag{font-size:15px;color:rgba(255,255,255,.7);margin-top:2px}
+.hdr{background:var(--sec);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:80px;flex-wrap:wrap}
+.hdr-left{display:flex;align-items:center;gap:14px}
+#brand-logo{height:56px;width:auto;display:none;object-fit:contain}
+.hdr-name{font-size:20px;font-weight:600;color:var(--pri)}
+.hdr-tag{font-size:14px;color:color-mix(in srgb,var(--pri) 70%,black);margin-top:1px}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-contact-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:color-mix(in srgb,var(--pri) 60%,black)}
+.hdr-contact-links{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.hdr-link{font-size:13px;color:var(--pri);text-decoration:none;font-weight:500}
+.hdr-link:hover{text-decoration:underline}
+@media(max-width:520px){.hdr{flex-direction:column;align-items:flex-start}.hdr-right{align-items:flex-start}}
 
-.wrap{max-width:720px;margin:0 auto;padding:24px 18px 120px}
+.wrap{max-width:720px;margin:0 auto;padding:24px 18px 40px}
 
 .card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);padding:26px;margin-bottom:16px}
 .card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:18px}
@@ -39,16 +46,20 @@ input[type=text],input[type=email],input[type=tel],input[type=number],select,tex
   font-family:inherit;font-size:17px;color:var(--txt);background:var(--sur);
   transition:border-color .15s;-webkit-appearance:none;appearance:none
 }
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px color-mix(in srgb,var(--pri) 10%,transparent)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sec);box-shadow:0 0 0 4px color-mix(in srgb,var(--sec) 15%,transparent)}
+input.err{border-color:#e24b4a}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button{opacity:1}
 textarea{resize:vertical;min-height:90px}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6066' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 
+.field-err{font-size:13px;color:#e24b4a;margin-top:5px;display:none}
+.field-err.show{display:block}
+
 .sec-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 2px;margin-bottom:12px;margin-top:6px}
 
 .prod-card{background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r);margin-bottom:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.prod-card.active{border-color:var(--pri);box-shadow:0 4px 20px color-mix(in srgb,var(--pri) 16%,transparent)}
+.prod-card.active{border-color:var(--sec);box-shadow:0 4px 20px color-mix(in srgb,var(--sec) 20%,transparent)}
 
 .prod-imgs{display:flex;width:100%;background:#111;overflow:hidden;height:340px}
 .prod-imgs.single{height:380px}
@@ -60,15 +71,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .prod-hdr{padding:20px 22px 0}
 .prod-name{font-size:20px;font-weight:600;margin-bottom:4px}
 .prod-code{font-size:13px;color:var(--mut);font-family:monospace}
-.prod-cat{display:inline-block;font-size:13px;font-weight:500;padding:4px 12px;border-radius:20px;background:color-mix(in srgb,var(--pri) 8%,white);color:var(--pri);margin-top:8px}
+.prod-cat{display:inline-block;font-size:13px;font-weight:500;padding:4px 12px;border-radius:20px;background:color-mix(in srgb,var(--sec) 15%,white);color:var(--pri);margin-top:8px}
 .prod-desc{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.55}
-
-.setup-block{background:color-mix(in srgb,var(--sec) 12%,white);border:1.5px solid color-mix(in srgb,var(--sec) 35%,white);border-radius:var(--rs);padding:14px 16px;margin-top:14px}
-.setup-line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.setup-label{font-size:15px;font-weight:600;color:var(--pri)}
-.setup-amount{font-size:15px;font-weight:700;color:var(--pri);white-space:nowrap}
-.setup-note-text{font-size:13px;color:var(--mut);margin-top:4px;line-height:1.5}
-.setup-art-note{font-size:12px;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--sec) 25%,white);line-height:1.45}
 
 .prod-body{padding:20px 22px 22px;border-top:1.5px solid var(--bdr);margin-top:18px}
 
@@ -81,7 +85,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
 @media(min-width:480px){.tier-grid{grid-template-columns:repeat(4,1fr)}}
 .tier-opt{border:1.5px solid var(--bdr);border-radius:var(--rs);padding:12px 8px;text-align:center;background:var(--sur);transition:border-color .15s,background .15s}
-.tier-opt.active{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 7%,white)}
+.tier-opt.active{border-color:var(--sec);background:color-mix(in srgb,var(--sec) 10%,white)}
 .t-qty{font-size:12px;color:var(--mut);margin-bottom:4px}
 .t-price{font-size:20px;font-weight:700}
 .tier-opt.active .t-price{color:var(--pri)}
@@ -89,7 +93,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 .tier-warn{background:#fffbeb;border:1.5px solid #e9b84a;border-radius:var(--rs);padding:10px 14px;font-size:15px;color:#7a5a00;margin-top:10px;display:none}
 
-.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:14px;border-top:1.5px solid var(--bdr);margin-top:16px}
+.setup-block{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:14px 16px;margin-bottom:14px}
+.setup-line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.setup-label{font-size:15px;font-weight:600;color:var(--pri)}
+.setup-amount{font-size:15px;font-weight:700;color:var(--pri);white-space:nowrap}
+.setup-note-text{font-size:13px;color:var(--mut);margin-top:4px;line-height:1.5}
+.setup-art-note{font-size:12px;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--sec) 20%,white);line-height:1.45}
+
+.prod-total-row{display:flex;justify-content:space-between;align-items:flex-end;padding-top:14px;border-top:1.5px solid var(--bdr);margin-top:4px}
 .ptl-lbl{font-size:16px;color:var(--mut)}
 .ptl-val{font-size:22px;font-weight:700}
 .tier-hint{font-size:13px;color:var(--pri);margin-top:4px;text-align:right}
@@ -101,16 +112,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .qty-row input{width:140px}
 .qty-note{font-size:16px;color:var(--mut)}
 
-.upload-zone{border:2px dashed var(--bdr);border-radius:var(--rs);padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
-.upload-zone:hover{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 3%,white)}
-.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-icon{font-size:32px;color:var(--lgt);margin-bottom:10px}
-.upload-title{font-size:16px;font-weight:500;color:var(--txt);margin-bottom:4px}
-.upload-sub{font-size:14px;color:var(--mut)}
-.upload-files{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
-.upload-tag{background:color-mix(in srgb,var(--pri) 8%,white);border:1px solid color-mix(in srgb,var(--pri) 20%,white);border-radius:6px;padding:5px 10px;font-size:13px;color:var(--pri);display:flex;align-items:center;gap:6px}
-.upload-tag button{background:none;border:none;cursor:pointer;color:var(--pri);font-size:15px;padding:0;line-height:1}
-
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:16px}
 .sum-lbl{color:var(--mut)}
 .sum-val{font-weight:500}
@@ -118,18 +119,25 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .sum-total{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
 .sum-total-lbl{font-size:18px;font-weight:600}
 .sum-total-val{font-size:28px;font-weight:700;color:var(--pri)}
+.invoice-note{background:color-mix(in srgb,var(--sec) 10%,white);border:1.5px solid color-mix(in srgb,var(--sec) 30%,white);border-radius:var(--rs);padding:14px 16px;font-size:15px;color:var(--pri);margin-top:14px;line-height:1.6}
 
-.submit-btn{width:100%;padding:18px;background:var(--pri);color:white;border:none;border-radius:var(--r);font-family:inherit;font-size:19px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:8px;letter-spacing:.01em}
-.submit-btn:hover{opacity:.9}
+.submit-btn{width:100%;padding:18px;background:var(--sec);color:var(--pri);border:none;border-radius:var(--r);font-family:inherit;font-size:19px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;margin-top:8px;letter-spacing:.01em}
+.submit-btn:hover{opacity:.88}
 .submit-btn:active{transform:scale(.99)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
+.powered-by{text-align:center;padding:24px 0 40px;display:flex;flex-direction:column;align-items:center;gap:10px}
+#swp-logo{height:32px;width:auto;display:none;object-fit:contain}
+.powered-text{font-size:13px;color:var(--mut)}
+.powered-link{font-size:14px;font-weight:600;color:var(--pri);text-decoration:none}
+.powered-link:hover{text-decoration:underline}
+
 .state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
-.spin{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--pri);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:18px}
+.spin{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--sec);border-radius:50%;animation:spin .75s linear infinite;margin-bottom:18px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ok-icon{width:64px;height:64px;background:#e6fdf2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;color:#1d7a4a}
 .state-title{font-size:24px;font-weight:700;margin-bottom:10px}
-.state-sub{font-size:17px;color:var(--mut);max-width:420px;line-height:1.65}
+.state-sub{font-size:17px;color:var(--mut);max-width:440px;line-height:1.65}
 
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;flex-direction:column;gap:14px}
 .lightbox img{max-width:100%;max-height:85vh;border-radius:8px;object-fit:contain}
@@ -153,14 +161,27 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="ok-icon">&#10003;</div>
   <div class="state-title">Order submitted</div>
   <div class="state-sub" id="ok-msg">Your order has been received.</div>
+  <div style="margin-top:20px;font-size:15px;color:var(--mut);max-width:420px;line-height:1.6;text-align:center">
+    Art files for standard products are already on file. For custom items or new artwork, our team will reach out to collect files before production begins.
+  </div>
 </div>
 
 <div id="st-form" style="display:none">
   <div class="hdr">
-    <img id="brand-logo" alt="Logo">
-    <div>
-      <div class="hdr-name" id="co-name"></div>
-      <div class="hdr-tag" id="co-tag">Place your order below</div>
+    <div class="hdr-left">
+      <img id="brand-logo" alt="Logo">
+      <div>
+        <div class="hdr-name" id="co-name"></div>
+        <div class="hdr-tag" id="co-tag">Place your order below</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-contact-label">Questions? Need help?</div>
+      <div class="hdr-contact-links">
+        <a id="hdr-phone" class="hdr-link" href="#"></a>
+        <a id="hdr-email" class="hdr-link" href="#"></a>
+        <a id="hdr-website" class="hdr-link" href="https://www.saltwater-promotions.com" target="_blank">saltwater-promotions.com</a>
+      </div>
     </div>
   </div>
 
@@ -175,13 +196,16 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         </div>
         <div class="field">
           <label>Email <span class="req">*</span></label>
-          <input type="email" id="f-email" placeholder="john@company.com" autocomplete="email">
+          <input type="email" id="f-email" placeholder="john@company.com" autocomplete="email"
+            onblur="validateEmail()">
+          <div class="field-err" id="email-err">Please enter a valid email address</div>
         </div>
       </div>
       <div class="row2">
         <div class="field">
           <label>Phone <span class="req">*</span></label>
-          <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel">
+          <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel"
+            oninput="formatPhone(this)">
         </div>
         <div class="field">
           <label>Location name <span class="req">*</span></label>
@@ -244,22 +268,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         <span class="sum-total-lbl">Subtotal</span>
         <span class="sum-total-val" id="sum-total">$0.00</span>
       </div>
-      <div style="font-size:14px;color:var(--lgt);margin-top:6px;text-align:right">
-        + shipping &amp; applicable taxes added to invoice
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Art files</div>
-      <div class="upload-zone" id="upload-zone">
-        <input type="file" id="art-files" multiple accept=".png,.jpg,.jpeg,.pdf,.svg,.ai,.eps" onchange="handleFiles(this.files)">
-        <div class="upload-icon">&#8679;</div>
-        <div class="upload-title">Upload your art files</div>
-        <div class="upload-sub">PNG, JPG, PDF, SVG, AI, EPS &mdash; multiple files supported</div>
-      </div>
-      <div class="upload-files" id="file-list"></div>
-      <div style="font-size:14px;color:var(--lgt);margin-top:10px">
-        Don't have art ready? No problem &mdash; we will follow up to collect files before production.
+      <div class="invoice-note">
+        An invoice will be sent to your email for payment. Your order will be confirmed and submitted to production once payment is received. Shipping and applicable taxes will be added to your invoice.
       </div>
     </div>
 
@@ -271,6 +281,15 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     </div>
 
     <button class="submit-btn" id="submit-btn" onclick="doSubmit()">Submit order</button>
+
+    <div class="powered-by">
+      <div class="powered-text">Powered by</div>
+      <a href="https://www.saltwater-promotions.com" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+        <img id="swp-logo" alt="Saltwater Promotions">
+        <span class="powered-link">Saltwater Promotions</span>
+      </a>
+    </div>
+
   </div>
 </div>
 
@@ -279,7 +298,6 @@ var PROXY = 'https://sunny-torrone-98545f.netlify.app/.netlify/functions/airtabl
 var gCompany  = null;
 var gProducts = [];
 var gItems    = {};
-var gFiles    = [];
 
 function apiCall(path, method, body) {
   return fetch(PROXY, {
@@ -306,28 +324,32 @@ function apiPost(table, fields) {
   return apiCall('/' + table, 'POST', { fields: fields });
 }
 
-function apiUploadFile(recordId, file) {
-  return new Promise(function(resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var base64 = e.target.result.split(',')[1];
-      fetch(PROXY, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          path: '/Orders/' + recordId + '/ArtFiles',
-          method: 'POST',
-          body: {
-            contentType: file.type || 'application/octet-stream',
-            filename: file.name,
-            file: base64
-          }
-        })
-      }).then(function(r) { return r.json(); }).then(resolve).catch(reject);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+function formatPhone(input) {
+  var v = input.value.replace(/\D/g,'');
+  if (v.length >= 10) {
+    input.value = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6,10);
+  } else if (v.length > 6) {
+    input.value = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+  } else if (v.length > 3) {
+    input.value = '(' + v.substring(0,3) + ') ' + v.substring(3);
+  } else if (v.length > 0) {
+    input.value = '(' + v;
+  }
+}
+
+function validateEmail() {
+  var el  = document.getElementById('f-email');
+  var err = document.getElementById('email-err');
+  var val = el.value.trim();
+  var ok  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  if (val && !ok) {
+    el.classList.add('err');
+    err.classList.add('show');
+    return false;
+  }
+  el.classList.remove('err');
+  err.classList.remove('show');
+  return true;
 }
 
 function init() {
@@ -358,10 +380,10 @@ function applyBrand(f) {
   if (f.BrandPrimaryColor) document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
-    var tint = hexToTint(f.BrandSecondaryColor, 0.35);
+    var tint = hexToTint(f.BrandSecondaryColor, 0.15);
     if (tint) document.documentElement.style.setProperty('--bg', tint);
   }
-  var logoUrl = f.BrandLogoUrlWhite || f.BrandLogoUrl;
+  var logoUrl = f.BrandLogoUrl || f.BrandLogoUrlWhite;
   if (logoUrl) {
     var el = document.getElementById('brand-logo');
     el.src = logoUrl;
@@ -371,6 +393,27 @@ function applyBrand(f) {
   document.getElementById('co-name').textContent = f.CompanyName || '';
   document.getElementById('co-tag').textContent  = f.OrderFormWelcomeMsg || 'Place your order below';
   document.title = 'Order — ' + (f.CompanyName || '');
+
+  if (f.SWPPhone) {
+    var ph = document.getElementById('hdr-phone');
+    ph.textContent = f.SWPPhone;
+    ph.href = 'tel:' + f.SWPPhone.replace(/\D/g,'');
+  }
+  if (f.SWPEmail) {
+    var em = document.getElementById('hdr-email');
+    em.textContent = f.SWPEmail;
+    em.href = 'mailto:' + f.SWPEmail;
+  }
+  if (f.SWPWebsite) {
+    var wb = document.getElementById('hdr-website');
+    wb.href = f.SWPWebsite.indexOf('http') === 0 ? f.SWPWebsite : 'https://' + f.SWPWebsite;
+  }
+  if (f.SWPLogoUrl) {
+    var sl = document.getElementById('swp-logo');
+    sl.src = f.SWPLogoUrl;
+    sl.style.display = 'block';
+    sl.onerror = function() { sl.style.display = 'none'; };
+  }
 }
 
 function hexToTint(hex, opacity) {
@@ -385,38 +428,24 @@ function hexToTint(hex, opacity) {
                + Math.round(b*opacity+255*(1-opacity)) + ')';
 }
 
-function handleFiles(files) {
-  for (var i = 0; i < files.length; i++) {
-    gFiles.push(files[i]);
-  }
-  renderFileList();
-}
-
-function removeFile(idx) {
-  gFiles.splice(idx, 1);
-  renderFileList();
-}
-
-function renderFileList() {
-  var list = document.getElementById('file-list');
-  list.innerHTML = '';
-  gFiles.forEach(function(f, idx) {
-    var tag = document.createElement('div');
-    tag.className = 'upload-tag';
-    tag.innerHTML = '<span>' + f.name + '</span>'
-      + '<button onclick="removeFile(' + idx + ')" title="Remove">&#215;</button>';
-    list.appendChild(tag);
-  });
-}
-
 function renderProducts() {
   var wrap = document.getElementById('products-wrap');
   gProducts.forEach(function(p) {
+    var f = p.fields;
+    var tiers = [
+      { min:f.Tier1MinQty, price:f.Tier1Price },
+      { min:f.Tier2MinQty, price:f.Tier2Price },
+      { min:f.Tier3MinQty, price:f.Tier3Price },
+      { min:f.Tier4MinQty, price:f.Tier4Price }
+    ].filter(function(t) { return t.min && t.price; });
+    var defaultQty = (f.InputType === 'QtyTiered' && tiers.length) ? tiers[0].min : 0;
     gItems[p.id] = {
-      singleQty: 0, sizes: {},
-      unitPrice:   p.fields.UnitPrice || 0,
-      setupFee:    p.fields.SetupFee  || 0,
-      tierApplied: '', tierMinQty: 0, specialNote: ''
+      singleQty: defaultQty, sizes: {},
+      unitPrice:   defaultQty > 0 ? tiers[0].price : (f.UnitPrice || 0),
+      setupFee:    f.SetupFee  || 0,
+      tierApplied: defaultQty > 0 ? ('Tier 1 - ' + tiers[0].min + '+ pcs @ $' + tiers[0].price.toFixed(2)) : '',
+      tierMinQty:  defaultQty > 0 ? tiers[0].min : 0,
+      specialNote: ''
     };
     wrap.appendChild(makeProductCard(p));
   });
@@ -454,7 +483,7 @@ function makeProductCard(p) {
       + '<span class="setup-amount">$' + f.SetupFee.toFixed(2) + ' per design</span>'
       + '</div>'
       + (f.SetupFeeNote ? '<div class="setup-note-text">' + f.SetupFeeNote + '</div>' : '')
-      + '<div class="setup-art-note">Additional setup fees may apply based on number of art changes or design variations. Note your design details in special instructions below.</div>'
+      + '<div class="setup-art-note">Additional setup fees may apply based on the number of art changes or design variations. Please note design details in special instructions below.</div>'
       + '</div>';
   }
 
@@ -462,21 +491,25 @@ function makeProductCard(p) {
                 : f.InputType === 'QtyTiered'  ? makeTierInput(p)
                 : makeSingleQty(p);
 
+  var item = gItems[p.id];
+  var initLine = (item.singleQty * item.unitPrice + (item.singleQty > 0 ? item.setupFee : 0)).toFixed(2);
+  var initTier = item.tierApplied || '';
+
   div.innerHTML = imgHtml
     + '<div class="prod-hdr">'
     + '<div class="prod-name">' + (f.ProductName || '') + '</div>'
     + '<div class="prod-code">' + (f.ProductCode  || '') + '</div>'
     + '<div class="prod-cat">'  + (f.Category     || '') + '</div>'
     + (f.Notes ? '<div class="prod-desc">' + f.Notes + '</div>' : '')
-    + setupHtml
     + '</div>'
     + '<div class="prod-body">'
     + inputHtml
+    + setupHtml
     + '<div class="prod-total-row">'
     + '<span class="ptl-lbl">Line total</span>'
     + '<div style="text-align:right">'
-    + '<div class="ptl-val" id="ptv-' + p.id + '">$0.00</div>'
-    + '<div class="tier-hint" id="pth-' + p.id + '"></div>'
+    + '<div class="ptl-val" id="ptv-' + p.id + '">$' + initLine + '</div>'
+    + '<div class="tier-hint" id="pth-' + p.id + '">' + initTier + '</div>'
     + '<div class="ship-inline">+ shipping added to invoice</div>'
     + '</div></div>'
     + '<div class="special-sec"><div class="field">'
@@ -487,6 +520,7 @@ function makeProductCard(p) {
     + '</div></div>'
     + '</div>';
 
+  if (item.singleQty > 0) div.classList.add('active');
   return div;
 }
 
@@ -502,7 +536,7 @@ function makeSizeMatrix(p) {
   return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">'
     + 'Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
     + '<div class="size-grid">' + cells + '</div>'
-    + '<div style="font-size:16px;color:var(--mut);margin-top:6px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
+    + '<div style="font-size:16px;color:var(--mut);margin-top:6px;margin-bottom:14px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
 }
 
 function makeTierInput(p) {
@@ -514,26 +548,31 @@ function makeTierInput(p) {
     { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
   ].filter(function(t) { return t.min && t.price; });
   var minQty = tiers.length ? tiers[0].min : 0;
+  var defaultQty = gItems[p.id].singleQty || minQty;
+  var activeTier = floorTier(f, defaultQty);
+
   var cards = tiers.map(function(t) {
     var lbl = t.next ? (t.min + '&ndash;' + (t.next-1) + ' pcs') : (t.min + '+ pcs');
-    return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
+    var isActive = activeTier && activeTier.idx === t.idx;
+    return '<div class="tier-opt' + (isActive ? ' active' : '') + '" id="to-' + p.id + '-' + t.idx + '">'
       + '<div class="t-qty">' + lbl + '</div>'
       + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
       + '<div class="t-each">each</div></div>';
   }).join('');
+
   return '<div style="font-size:15px;color:var(--mut);margin-bottom:12px;font-weight:500">Select quantity &mdash; price tier applies automatically</div>'
     + '<div class="tier-grid">' + cards + '</div>'
     + '<div class="field"><label>Quantity</label>'
     + '<div class="qty-row">'
-    + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onTier(\'' + p.id + '\')">'
-    + '<span class="qty-note" id="qn-' + p.id + '"></span>'
+    + '<input type="number" id="qi-' + p.id + '" min="0" value="' + defaultQty + '" oninput="onTier(\'' + p.id + '\')">'
+    + '<span class="qty-note" id="qn-' + p.id + '">' + (activeTier ? '$' + activeTier.price.toFixed(2) + ' each' : '') + '</span>'
     + '</div>'
-    + '<div class="tier-warn" id="tw-' + p.id + '">Minimum order for this item is ' + minQty + ' pcs. Your quantity will be reviewed before the order is confirmed.</div>'
+    + '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet minimum order requirements of ' + minQty + ' pcs before your order is confirmed.</div>'
     + '</div>';
 }
 
 function makeSingleQty(p) {
-  return '<div class="field">'
+  return '<div class="field" style="margin-bottom:14px">'
     + '<label>Quantity &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</label>'
     + '<div class="qty-row">'
     + '<input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')">'
@@ -547,8 +586,7 @@ function onSize(pid) {
   sizes.forEach(function(s) {
     var el = document.querySelector('[data-pid="' + pid + '"][data-sz="' + s + '"]');
     var v  = el ? (parseInt(el.value) || 0) : 0;
-    smap[s] = v;
-    total  += v;
+    smap[s] = v; total += v;
   });
   gItems[pid].sizes     = smap;
   gItems[pid].singleQty = total;
@@ -681,14 +719,15 @@ function doSubmit() {
   var zip     = document.getElementById('f-zip').value.trim();
   var notes   = document.getElementById('f-notes').value.trim();
 
-  if (!name)    { alert('Please enter your name.');             return; }
-  if (!email)   { alert('Please enter your email address.');    return; }
-  if (!phone)   { alert('Please enter your phone number.');     return; }
-  if (!locname) { alert('Please enter your location name.');    return; }
-  if (!addr1)   { alert('Please enter a ship-to address.');     return; }
-  if (!city)    { alert('Please enter a city.');                return; }
-  if (!state)   { alert('Please select a state.');              return; }
-  if (!zip)     { alert('Please enter a zip code.');            return; }
+  if (!name)              { alert('Please enter your name.');             return; }
+  if (!email)             { alert('Please enter your email address.');    return; }
+  if (!validateEmail())   { alert('Please enter a valid email address.'); return; }
+  if (!phone)             { alert('Please enter your phone number.');     return; }
+  if (!locname)           { alert('Please enter your location name.');    return; }
+  if (!addr1)             { alert('Please enter a ship-to address.');     return; }
+  if (!city)              { alert('Please enter a city.');                return; }
+  if (!state)             { alert('Please select a state.');              return; }
+  if (!zip)               { alert('Please enter a zip code.');            return; }
 
   var active = gProducts.filter(function(p) { return (gItems[p.id].singleQty || 0) > 0; });
   if (!active.length) { alert('Please add at least one item before submitting.'); return; }
@@ -698,23 +737,23 @@ function doSubmit() {
   btn.textContent = 'Submitting...';
 
   var orderFields = {
-    Company:         [gCompany.id],
-    OrderStatus:     'Submitted',
-    NeedsProof:      false,
-    ProofStatus:     'NotRequired',
-    IsBlindShip:     true,
-    ShippingNote:    'TBD - added to invoice',
-    SubmittedDate:   new Date().toISOString().split('T')[0],
-    SubmitterName:   name,
-    SubmitterEmail:  email,
-    SubmitterPhone:  phone,
-    LocationName:    locname,
-    ShipAddress1:    addr1,
-    ShipAddress2:    addr2,
-    ShipCity:        city,
-    ShipState:       state,
-    ShipZip:         zip,
-    OrderNotes:      notes
+    Company:        [gCompany.id],
+    OrderStatus:    'Submitted',
+    NeedsProof:     false,
+    ProofStatus:    'NotRequired',
+    IsBlindShip:    true,
+    ShippingNote:   'TBD - added to invoice',
+    SubmittedDate:  new Date().toISOString().split('T')[0],
+    SubmitterName:  name,
+    SubmitterEmail: email,
+    SubmitterPhone: phone,
+    LocationName:   locname,
+    ShipAddress1:   addr1,
+    ShipAddress2:   addr2,
+    ShipCity:       city,
+    ShipState:      state,
+    ShipZip:        zip,
+    OrderNotes:     notes
   };
 
   apiPost('Orders', orderFields).then(function(order) {
@@ -749,23 +788,11 @@ function doSubmit() {
       });
     });
 
-    if (gFiles.length > 0) {
-      chain = chain.then(function() {
-        var fileChain = Promise.resolve();
-        gFiles.forEach(function(file) {
-          fileChain = fileChain.then(function() {
-            return apiUploadFile(order.id, file);
-          });
-        });
-        return fileChain;
-      });
-    }
-
     return chain.then(function() {
       var num = (order.fields && order.fields.OrderNumber) || order.id.slice(-6).toUpperCase();
       document.getElementById('ok-msg').textContent =
-        'Order #' + num + ' received. Your invoice will include product total, '
-        + 'any applicable setup fees, and actual shipping cost once your order is ready to ship.';
+        'Order #' + num + ' received. An invoice will be sent to ' + email
+        + ' for payment. Your order will be confirmed and submitted to production once payment is received.';
       show('st-success');
     });
 
