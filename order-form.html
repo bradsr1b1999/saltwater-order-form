@@ -13,19 +13,19 @@
   --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}@media(min-width:521px){body{background-image:url("https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/main/backdrop.jpg");background-size:cover;background-position:center;background-attachment:fixed;background-repeat:no-repeat}}
 
-.hdr{background:var(--sec);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:84px;flex-wrap:wrap}
+.hdr{background:var(--sec);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:62px}
 .hdr-left{display:flex;align-items:center;gap:16px}
-#brand-logo{height:73px;width:auto;display:none;object-fit:contain}
+#brand-logo{height:46px;width:auto;display:none;object-fit:contain}
 .hdr-name{font-size:20px;font-weight:600;color:var(--pri)}
 .hdr-tag{font-size:14px;color:color-mix(in srgb,var(--pri) 70%,black);margin-top:1px}
-.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
-.hdr-contact-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:color-mix(in srgb,var(--pri) 60%,black)}
-.hdr-contact-links{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-right{display:flex;flex-direction:row;align-items:center;gap:14px}
+.hdr-contact-label{display:none}
+.hdr-contact-links{display:flex;flex-direction:row;align-items:center;gap:14px}
 .hdr-link{font-size:13px;color:var(--pri);text-decoration:none;font-weight:500}
 .hdr-link:hover{text-decoration:underline}
-@media(max-width:520px){.hdr{flex-direction:row;align-items:center;padding:14px 16px;min-height:64px}.hdr-right{display:none}.hdr-name{font-size:17px}.hdr-tag{font-size:12px}#brand-logo{height:44px}}
+@media(max-width:520px){.hdr{flex-direction:row;align-items:center;padding:14px 16px;min-height:64px}.hdr-right{display:none}.hdr-name{font-size:17px}.hdr-tag{font-size:12px}#brand-logo{height:46px;width:auto;display:none;object-fit:contain}}
 
 .wrap{max-width:740px;margin:0 auto;padding:28px 20px 60px}@media(max-width:480px){.wrap{padding:10px 14px 60px}}
 
@@ -204,7 +204,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="hdr-contact-links">
         <a id="hdr-phone" class="hdr-link" href="#"></a>
         <a id="hdr-email" class="hdr-link" href="#"></a>
-        <a id="hdr-website" class="hdr-link" href="https://www.saltwater-promotions.com" target="_blank">saltwater-promotions.com</a>
       </div>
     </div>
   </div>
