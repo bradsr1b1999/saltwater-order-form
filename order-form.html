@@ -13,7 +13,7 @@
   --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}@media(min-width:521px){body{background-image:url("https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/main/backdrop.jpg");background-size:cover;background-position:center;background-repeat:no-repeat}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}.bg-img{display:none;position:fixed;inset:0;z-index:-1;background-size:cover;background-position:center;background-repeat:no-repeat}@media(min-width:521px){.bg-img{display:block}}
 
 .hdr{background:var(--sec);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:62px}
 .hdr-left{display:flex;align-items:center;gap:16px}
@@ -170,6 +170,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </head>
 <body>
 
+<div class="bg-img" id="bg-img"></div>
 <div id="st-loading" class="state-wrap">
   <div class="spin"></div>
   <p style="color:rgba(255,255,255,.7);font-size:17px">Loading your order form...</p>
@@ -200,11 +201,9 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       </div>
     </div>
     <div class="hdr-right">
-      <div class="hdr-contact-label">Questions or need help?</div>
-      <div class="hdr-contact-links">
-        <a id="hdr-phone" class="hdr-link" href="#"></a>
-        <a id="hdr-email" class="hdr-link" href="#"></a>
-      </div>
+      <span style="font-size:13px;font-weight:600;color:color-mix(in srgb,var(--pri) 70%,black);white-space:nowrap">Need help?</span>
+      <a id="hdr-phone" class="hdr-link" href="#"></a>
+      <a id="hdr-email" class="hdr-link" href="#"></a>
     </div>
   </div>
 
@@ -512,6 +511,8 @@ function applyBrand(f) {
     document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
     document.documentElement.style.setProperty('--bg',  f.BrandPrimaryColor);
   }
+  var bgEl = document.getElementById('bg-img');
+  if (bgEl) bgEl.style.backgroundImage = 'url("https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/main/backdrop.jpg")';
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
   }
