@@ -13,7 +13,7 @@
   --r:14px;--rs:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}.bg-img{display:none;position:fixed;inset:0;z-index:-1;background-size:100% 100%;background-position:center center;background-repeat:no-repeat;background-color:transparent;image-rendering:crisp-edges}@media(min-width:521px){.bg-img{display:block}html,body{background-color:transparent!important}.state-wrap{background:transparent}.wrap{background:transparent}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}.bg-img{display:none}@media(min-width:521px){.bg-img{display:none}html,body{background-color:transparent!important}.state-wrap{background:transparent}.wrap{background:transparent}}
 
 .hdr{background:var(--sec);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:62px}
 .hdr-left{display:flex;align-items:center;gap:16px}
@@ -166,11 +166,24 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .skel-line.wide{width:70%}
 .skel-line.med{width:45%}
 .skel-line.short{width:25%}
+
+.dots-left,.dots-right{position:fixed;top:0;width:180px;height:100vh;pointer-events:none;z-index:0;overflow:hidden}
+.dots-left{left:0}.dots-right{right:0}
+@media(max-width:520px){.dots-left,.dots-right{display:none}}
+
+.dots-left,.dots-right{position:fixed;top:0;height:100vh;pointer-events:none;z-index:0}
+.dots-left{left:0;width:200px}.dots-right{right:0;width:200px}
+.dots-left img,.dots-right img{width:100%;height:100%;object-fit:cover;object-position:top}
+@media(max-width:520px){.dots-left,.dots-right{display:none}}
 </style>
 </head>
 <body>
 
 <div class="bg-img" id="bg-img"></div>
+  <div class="dots-left"><img src="https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/refs/heads/main/dots-left.svg" alt=""></div>
+  <div class="dots-right"><img src="https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/refs/heads/main/dots-right.svg" alt=""></div>
+
+
 <div id="st-loading" class="state-wrap">
   <div class="spin"></div>
   <p style="color:rgba(255,255,255,.7);font-size:17px">Loading your order form...</p>
@@ -511,8 +524,6 @@ function applyBrand(f) {
     document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
     document.documentElement.style.setProperty('--bg',  f.BrandPrimaryColor);
   }
-  var bgEl = document.getElementById('bg-img');
-  if (bgEl) bgEl.style.backgroundImage = 'url("https://raw.githubusercontent.com/bradsr1b1999/saltwater-order-form/main/backdrop_1.jpg")';
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
   }
