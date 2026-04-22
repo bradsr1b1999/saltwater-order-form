@@ -601,7 +601,8 @@ function renderProducts() {
       setupFee:    f.SetupFee  || 0,
       tierApplied: '',
       tierMinQty:  0,
-      specialNote: ''
+      specialNote: '',
+      increment:   f.OrderIncrement || 0
     };
     wrap.appendChild(makeProductCard(p));
   });
@@ -709,11 +710,15 @@ function makeTierInput(p) {
     + '<span class="qty-note" id="qn-' + p.id + '"></span>'
     + '</div>'
     + '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet the minimum order requirement of ' + minQty + ' pcs before your order is confirmed.</div>'
+    + '<div class="tier-warn" id="iw-' + p.id + '"></div>'
     + '</div>';
 }
 function makeSingleQty(p) {
   return '<div class="field" style="margin-bottom:16px"><label>Quantity &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</label>'
-    + '<div class="qty-row"><input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')"></div></div>';
+    + '<div class="qty-row"><input type="number" id="qi-' + p.id + '" min="0" value="0" placeholder="0" oninput="onSingle(\'' + p.id + '\')">'
+    + '</div>'
+    + '<div class="tier-warn" id="iw-' + p.id + '"></div>'
+    + '</div>';
 }
 
 function onSize(pid) {
@@ -728,6 +733,7 @@ function onSize(pid) {
   gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
   var el = document.getElementById('st-' + pid);
   if (el) el.textContent = total;
+  checkIncrement(pid, total);
   recalc(pid);
 }
 
@@ -768,6 +774,7 @@ function onTier(pid) {
     }
   }
   gItems[pid].singleQty = qty;
+  checkIncrement(pid, qty);
   recalc(pid);
 }
 
@@ -775,7 +782,31 @@ function onSingle(pid) {
   var qty = parseInt(document.getElementById('qi-' + pid).value) || 0;
   gItems[pid].singleQty = qty;
   gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
+  checkIncrement(pid, qty);
   recalc(pid);
+}
+
+
+function checkIncrement(pid, qty) {
+  var item = gItems[pid];
+  var inc  = item.increment || 0;
+  var iw   = document.getElementById('iw-' + pid);
+  if (!iw) return;
+  if (!inc || !qty || qty <= 0) {
+    iw.style.display = 'none';
+    iw.textContent = '';
+    return;
+  }
+  if (qty % inc !== 0) {
+    var lower = Math.floor(qty / inc) * inc;
+    var upper = lower + inc;
+    iw.textContent = 'This item must be ordered in multiples of ' + inc
+      + '. Nearest valid quantities: ' + (lower > 0 ? lower : upper) + ' or ' + upper + ' pcs.';
+    iw.style.display = 'block';
+  } else {
+    iw.style.display = 'none';
+    iw.textContent = '';
+  }
 }
 
 function findProduct(pid) {
