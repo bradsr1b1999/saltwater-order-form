@@ -681,7 +681,8 @@ function makeSizeMatrix(p) {
   }).join('');
   return '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
     + '<div class="size-grid">' + cells + '</div>'
-    + '<div style="font-size:17px;color:var(--mut);margin-top:8px;margin-bottom:16px">Total units: <strong id="st-' + p.id + '">0</strong></div>';
+    + '<div style="font-size:17px;color:var(--mut);margin-top:8px;margin-bottom:16px">Total units: <strong id="st-' + p.id + '">0</strong></div>'
+    + '<div class="tier-warn" id="iw-' + p.id + '"></div>';
 }
 
 function makeTierInput(p) {
