@@ -425,7 +425,7 @@ function apiGet(table, formula) {
 function apiGetByIds(table, ids) {
   if (!ids || !ids.length) return Promise.resolve([]);
   var formula = 'OR(' + ids.map(function(id) { return 'RECORD_ID()="' + id + '"'; }).join(',') + ')';
-  var sort = table === 'Products' ? '&sort[0][field]=ProductCode&sort[0][direction]=asc' : '';
+  var sort = table === 'Products' ? '&sort[0][field]=SortOrder&sort[0][direction]=asc' : '';
   return apiCall('/' + table + '?filterByFormula=' + encodeURIComponent(formula) + sort)
     .then(function(d) { return d.records || []; });
 }
