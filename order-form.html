@@ -5,25 +5,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Order Form</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --pri:#1a3c5e;--sec:#00d9e5;--bg:#1a3c5e;--sur:#ffffff;
   --bdr:#cceaed;--txt:#1a1a18;--mut:#4a6066;--lgt:#7a9ca0;
   --r:14px;--rs:10px;
+  --hdr:var(--sec);--hdr-txt:#ffffff;--hdr-sub:rgba(255,255,255,.7);
+  --font:'DM Sans',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}.bg-img{display:none}@media(min-width:521px){.bg-img{display:none}}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:18px;line-height:1.55;min-height:100vh}.bg-img{display:none}@media(min-width:521px){.bg-img{display:none}}
 
-.hdr{background:var(--sec);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:62px}
+.hdr{background:var(--hdr);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;min-height:62px}
 .hdr-left{display:flex;align-items:center;gap:16px}
 #brand-logo{height:46px;width:auto;display:none;object-fit:contain}
-.hdr-name{font-size:20px;font-weight:600;color:var(--pri)}
-.hdr-tag{font-size:14px;color:color-mix(in srgb,var(--pri) 70%,black);margin-top:1px}
+.hdr-name{font-size:20px;font-weight:600;color:var(--hdr-txt)}
+.hdr-tag{font-size:14px;color:var(--hdr-sub);margin-top:1px}
 .hdr-right{display:flex;flex-direction:row;align-items:center;gap:14px}
 .hdr-contact-label{display:none}
 .hdr-contact-links{display:flex;flex-direction:row;align-items:center;gap:14px}
-.hdr-link{font-size:13px;color:var(--pri);text-decoration:none;font-weight:500}
+.hdr-link{font-size:13px;color:var(--hdr-txt);text-decoration:none;font-weight:500}
 .hdr-link:hover{text-decoration:underline}
 @media(max-width:520px){.hdr{flex-direction:row;align-items:center;padding:14px 16px;min-height:64px}.hdr-right{display:none}.hdr-name{font-size:17px}.hdr-tag{font-size:12px}#brand-logo{height:46px;width:auto;display:none;object-fit:contain}}
 
@@ -221,7 +223,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       </div>
     </div>
     <div class="hdr-right">
-      <span style="font-size:13px;font-weight:600;color:color-mix(in srgb,var(--pri) 70%,black);white-space:nowrap">Need help?</span>
+      <span style="font-size:13px;font-weight:600;color:var(--hdr-txt);white-space:nowrap">Need help?</span>
       <a id="hdr-phone" class="hdr-link" href="#"></a>
       <a id="hdr-email" class="hdr-link" href="#"></a>
     </div>
@@ -434,6 +436,17 @@ function apiPost(table, fields) {
   return apiCall('/' + table, 'POST', { fields: fields });
 }
 
+
+function isColorDark(hex) {
+  hex = hex.replace('#','');
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  var r = parseInt(hex.substring(0,2),16);
+  var g = parseInt(hex.substring(2,4),16);
+  var b = parseInt(hex.substring(4,6),16);
+  var luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+  return luminance < 0.5;
+}
+
 function formatPhone(input) {
   var v = input.value.replace(/\D/g,'');
   if (v.length >= 10) {
@@ -529,10 +542,24 @@ function init() {
 function applyBrand(f) {
   if (f.BrandPrimaryColor) {
     document.documentElement.style.setProperty('--pri', f.BrandPrimaryColor);
-    document.documentElement.style.setProperty('--bg',  f.BrandPrimaryColor);
+    document.documentElement.style.setProperty('--bg',  f.BrandSecondaryColor || f.BrandPrimaryColor);
   }
   if (f.BrandSecondaryColor) {
     document.documentElement.style.setProperty('--sec', f.BrandSecondaryColor);
+  }
+  if (f.HeaderColor) {
+    document.documentElement.style.setProperty('--hdr', f.HeaderColor);
+    var isDark = isColorDark(f.HeaderColor);
+    document.documentElement.style.setProperty('--hdr-txt', isDark ? '#ffffff' : '#000000');
+    document.documentElement.style.setProperty('--hdr-sub', isDark ? 'rgba(255,255,255,.7)' : 'rgba(0,0,0,.5)');
+  } else {
+    document.documentElement.style.setProperty('--hdr', 'var(--sec)');
+    document.documentElement.style.setProperty('--hdr-txt', '#ffffff');
+    document.documentElement.style.setProperty('--hdr-sub', 'rgba(255,255,255,.7)');
+  }
+  if (f.BrandFontFamily) {
+    document.documentElement.style.setProperty('--font', "'" + f.BrandFontFamily + "', sans-serif");
+    document.body.style.fontFamily = "'" + f.BrandFontFamily + "', sans-serif";
   }
   var logoUrl = f.BrandLogoUrl || f.BrandLogoUrlWhite;
   if (logoUrl) {
