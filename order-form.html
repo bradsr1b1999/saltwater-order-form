@@ -760,8 +760,15 @@ function makeSizeMatrix(p) {
 
   var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
   var cells = sizes.map(function(s) {
-    return '<div class="sz-cell"><div class="sz-lbl">' + s + '</div>'
-      + '<input type="number" class="sz-inp" min="0" value="0" data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize('' + p.id + '')"></div>';
+    var inp = ['<div class="sz-cell">',
+      '<div class="sz-lbl">', s, '</div>',
+      '<input type="number" class="sz-inp" min="0" value="0"',
+      ' data-pid="', p.id, '"',
+      ' data-sz="', s, '"',
+      ' oninput="onSize(\'' , p.id , '\')"',
+      '></div>'
+    ].join('');
+    return inp;
   }).join('');
 
   var priceLabel = hasTiers
