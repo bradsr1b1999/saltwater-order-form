@@ -294,7 +294,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         </div>
         <div class="field">
           <label>Location name <span class="req">*</span></label>
-          <input type="text" id="f-locname" placeholder="eg Voda of Sarasota, Store #4...">
+          <input type="text" id="f-locname" placeholder="eg your location name or city...">
         </div>
       </div>
     </div>
@@ -586,6 +586,10 @@ function applyBrand(f) {
     el.onerror = function() { el.style.display = 'none'; };
   }
   document.getElementById('co-name').textContent = f.CompanyName || '';
+  var locInput = document.getElementById('f-locname');
+  if (locInput && f.CompanyName) {
+    locInput.placeholder = 'eg ' + f.CompanyName + ' of Sarasota, Store #4...';
+  }
   document.getElementById('co-tag').textContent  = f.OrderFormWelcomeMsg || 'Place your order below';
   document.title = 'Order — ' + (f.CompanyName || '');
 
@@ -731,14 +735,48 @@ function makeProductCard(p) {
 }
 
 function makeSizeMatrix(p) {
+  var f = p.fields;
+  var tiers = [
+    { idx:1, min:f.Tier1MinQty, next:f.Tier2MinQty, price:f.Tier1Price },
+    { idx:2, min:f.Tier2MinQty, next:f.Tier3MinQty, price:f.Tier2Price },
+    { idx:3, min:f.Tier3MinQty, next:f.Tier4MinQty, price:f.Tier3Price },
+    { idx:4, min:f.Tier4MinQty, next:null,           price:f.Tier4Price }
+  ].filter(function(t) { return t.min && t.price; });
+  var hasTiers = tiers.length > 0;
+  var minQty   = hasTiers ? tiers[0].min : 0;
+
+  var tierHtml = '';
+  if (hasTiers) {
+    var cards = tiers.map(function(t) {
+      var lbl = t.next ? (t.min + '&ndash;' + (t.next-1) + ' pcs') : (t.min + '+ pcs');
+      return '<div class="tier-opt" id="to-' + p.id + '-' + t.idx + '">'
+        + '<div class="t-qty">' + lbl + '</div>'
+        + '<div class="t-price">$' + t.price.toFixed(2) + '</div>'
+        + '<div class="t-each">each</div></div>';
+    }).join('');
+    tierHtml = '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">Price tier applies automatically based on total units</div>'
+      + '<div class="tier-grid">' + cards + '</div>';
+  }
+
   var sizes = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
   var cells = sizes.map(function(s) {
     return '<div class="sz-cell"><div class="sz-lbl">' + s + '</div>'
-      + '<input type="number" class="sz-inp" min="0" value="0" data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize(\'' + p.id + '\')"></div>';
+      + '<input type="number" class="sz-inp" min="0" value="0" data-pid="' + p.id + '" data-sz="' + s + '" oninput="onSize('' + p.id + '')"></div>';
   }).join('');
-  return '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">Qty per size &mdash; <strong>$' + (p.fields.UnitPrice||0).toFixed(2) + '</strong> each</div>'
+
+  var priceLabel = hasTiers
+    ? 'Qty per size &mdash; price updates by tier'
+    : 'Qty per size &mdash; <strong>$' + (f.UnitPrice||0).toFixed(2) + '</strong> each';
+
+  var minWarn = hasTiers
+    ? '<div class="tier-warn" id="tw-' + p.id + '">Quantity will be reviewed and adjusted to meet the minimum order requirement of ' + minQty + ' pcs before your order is confirmed.</div>'
+    : '';
+
+  return tierHtml
+    + '<div style="font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:500">' + priceLabel + '</div>'
     + '<div class="size-grid">' + cells + '</div>'
-    + '<div style="font-size:17px;color:var(--mut);margin-top:8px;margin-bottom:16px">Total units: <strong id="st-' + p.id + '">0</strong></div>'
+    + '<div style="font-size:17px;color:var(--mut);margin-top:8px;margin-bottom:6px">Total units: <strong id="st-' + p.id + '">0</strong></div>'
+    + minWarn
     + '<div class="tier-warn" id="iw-' + p.id + '"></div>';
 }
 
@@ -787,8 +825,48 @@ function onSize(pid) {
     var v  = el ? (parseInt(el.value) || 0) : 0;
     smap[s] = v; total += v;
   });
-  gItems[pid].sizes = smap; gItems[pid].singleQty = total;
-  gItems[pid].unitPrice = findProduct(pid).fields.UnitPrice || 0;
+  gItems[pid].sizes     = smap;
+  gItems[pid].singleQty = total;
+  var p = findProduct(pid);
+  var f = p.fields;
+  var tiers = [
+    { idx:1, min:f.Tier1MinQty, price:f.Tier1Price },
+    { idx:2, min:f.Tier2MinQty, price:f.Tier2Price },
+    { idx:3, min:f.Tier3MinQty, price:f.Tier3Price },
+    { idx:4, min:f.Tier4MinQty, price:f.Tier4Price }
+  ].filter(function(t) { return t.min && t.price; });
+  var minQty = tiers.length ? tiers[0].min : 0;
+
+  if (tiers.length > 0) {
+    var t = floorTier(f, total);
+    [1,2,3,4].forEach(function(i) {
+      var el = document.getElementById('to-' + pid + '-' + i);
+      if (el) el.classList.remove('active');
+    });
+    var warn = document.getElementById('tw-' + pid);
+    if (total > 0 && total < minQty) {
+      if (warn) warn.style.display = 'block';
+      gItems[pid].unitPrice   = tiers[0].price;
+      gItems[pid].tierApplied = '';
+      gItems[pid].tierMinQty  = 0;
+    } else {
+      if (warn) warn.style.display = 'none';
+      if (t && total > 0) {
+        var to = document.getElementById('to-' + pid + '-' + t.idx);
+        if (to) to.classList.add('active');
+        gItems[pid].unitPrice   = t.price;
+        gItems[pid].tierApplied = 'Tier ' + t.idx + ' - ' + t.min + '+ pcs @ $' + t.price.toFixed(2);
+        gItems[pid].tierMinQty  = t.min;
+      } else {
+        gItems[pid].unitPrice   = tiers[0].price;
+        gItems[pid].tierApplied = '';
+        gItems[pid].tierMinQty  = 0;
+      }
+    }
+  } else {
+    gItems[pid].unitPrice = f.UnitPrice || 0;
+  }
+
   var el = document.getElementById('st-' + pid);
   if (el) el.textContent = total;
   checkIncrement(pid, total);
